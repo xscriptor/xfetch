@@ -1,7 +1,6 @@
 # xfetch Roadmap
 
-## Phase 0 · Foundation & Core
-<!-- phase:phase-0:foundation -->
+## Phase 0 · Foundation & Core <!-- phase:phase-0:foundation -->
 
 - [x] Initialize Rust project with dependencies
 - [x] Implement cross-platform OS detection (Linux, Windows, macOS)
@@ -9,8 +8,7 @@
 - [x] Implement configuration system with JSONC support
 - [x] Build UI rendering engine with crossterm
 
-## Phase 1 · System Information Modules
-<!-- phase:phase-1:system-modules -->
+## Phase 1 · System Information Modules <!-- phase:phase-1:system-modules -->
 
 - [x] OS Name & Architecture display
 - [x] Kernel version detection
@@ -26,8 +24,7 @@
 - [x] Package count for multiple managers (pacman, dpkg, scoop)
 - [x] Desktop Environment / Window Manager detection
 
-## Phase 2 · Visual Customization & Layouts
-<!-- phase:phase-2:visual-features -->
+## Phase 2 · Visual Customization & Layouts <!-- phase:phase-2:visual-features -->
 
 - [x] Custom ASCII art support from text files
 - [x] Image/SVG logo support via viuer
@@ -41,8 +38,7 @@
 - [x] Section layout for grouped information
 - [x] Color palette display with style options
 
-## Phase 3 · Documentation & Examples
-<!-- phase:phase-3:documentation -->
+## Phase 3 · Documentation & Examples <!-- phase:phase-3:documentation -->
 
 - [x] Installation guide (INSTALLATION.md)
 - [x] Configuration guide (CONFIGURATION.md)
@@ -53,8 +49,7 @@
 - [x] Setup uninstallation scripts
 - [x] Layout documentation (LAYOUTS.md)
 
-## Phase 4 · Package Manager Expansion
-<!-- phase:phase-4:package-managers -->
+## Phase 4 · Package Manager Expansion <!-- phase:phase-4:package-managers -->
 
 - [ ] Add RPM package manager support (Fedora, RHEL)
 - [ ] Add APK package manager support (Alpine)
@@ -64,8 +59,7 @@
 - [ ] Detect multiple installed package managers
 - [/] Optimize package count detection performance
 
-## Phase 5 · Network & Connectivity
-<!-- phase:phase-5:network -->
+## Phase 5 · Network & Connectivity <!-- phase:phase-5:network -->
 
 - [ ] Implement local IP address detection
 - [ ] Fetch public IP address (with privacy option)
@@ -73,8 +67,7 @@
 - [ ] Display network interface information
 - [ ] Add option to disable IP fetching for privacy
 
-## Phase 6 · Enhanced Modules
-<!-- phase:phase-6:enhanced-modules -->
+## Phase 6 · Enhanced Modules <!-- phase:phase-6:enhanced-modules -->
 
 - [ ] Implement music player integration (MPD support)
 - [ ] Add Spotify current track display
@@ -84,8 +77,7 @@
 - [ ] Add display resolution and refresh rate
 - [ ] Add theme and color scheme detection
 
-## Phase 7 · Additional Layouts
-<!-- phase:phase-7:additional-layouts -->
+## Phase 7 · Additional Layouts <!-- phase:phase-7:additional-layouts -->
 
 - [ ] Implement compact layout for minimal output
 - [ ] Implement horizontal layout variant
@@ -93,8 +85,7 @@
 - [ ] Implement minimal layout (text-only)
 - [ ] Add layout preview documentation
 
-## Phase 8 · Performance Optimization
-<!-- phase:phase-8:performance -->
+## Phase 8 · Performance Optimization <!-- phase:phase-8:performance -->
 
 - [ ] Parallelize slow hardware probes
 - [ ] Implement caching for module data
@@ -102,8 +93,7 @@
 - [ ] Add lazy loading for optional modules
 - [ ] Benchmark and profile performance
 
-## Phase 9 · CI/CD & Distribution
-<!-- phase:phase-9:cicd -->
+## Phase 9 · CI/CD & Distribution <!-- phase:phase-9:cicd -->
 
 - [ ] Setup GitHub Actions for automated builds
 - [ ] Create binary releases for Linux x86_64
@@ -114,8 +104,7 @@
 - [ ] Setup PyPI or cargo registry for distribution
 - [ ] Setup automated changelog generation
 
-## Phase 10 · Community & Ecosystem
-<!-- phase:phase-10:ecosystem -->
+## Phase 10 · Community & Ecosystem <!-- phase:phase-10:ecosystem -->
 
 - [ ] Create themes repository / registry
 - [ ] Implement theme download manager
@@ -126,8 +115,7 @@
 - [ ] Setup community issue templates
 - [ ] Create contribution guidelines (CONTRIBUTING.md)
 
-## Phase 11 · Testing & Quality Assurance
-<!-- phase:phase-11:testing -->
+## Phase 11 · Testing & Quality Assurance <!-- phase:phase-11:testing -->
 
 - [ ] Implement unit tests for info module
 - [ ] Implement unit tests for config module
@@ -138,8 +126,7 @@
 - [ ] Add cross-platform testing suite
 - [ ] Setup code coverage reporting
 
-## Phase 12 · Advanced Features
-<!-- phase:phase-12:advanced -->
+## Phase 12 · Advanced Features <!-- phase:phase-12:advanced -->
 
 - [ ] Implement custom module scripting language / support
 - [ ] Add conditional module display based on system state
@@ -150,8 +137,7 @@
 - [ ] Implement telemetry (optional, privacy-respecting)
 - [ ] Add accessibility features (high contrast themes)
 
-## Phase 13 · Documentation & Marketing
-<!-- phase:phase-13:marketing -->
+## Phase 13 · Documentation & Marketing <!-- phase:phase-13:marketing -->
 
 - [ ] Create comprehensive user manual
 - [ ] Create video tutorials
