@@ -141,10 +141,11 @@ xfetch
 
 <div align="left">
   <ul>
-    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/INSTALLATION.md">Installation</a></li>
-    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/CONFIGURATION.md">Config</a></li>
-    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/LAYOUTS.md">Layouts</a></li>
-    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/UNINSTALLATION.md">Uninstall</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/docs/INSTALLATION.md">Installation</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/docs/CONFIGURATION.md">Config</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/docs/LAYOUTS.md">Layouts</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/docs/UNINSTALLATION.md">Uninstall</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/ROADMAP.md">Roadmap</a></li>
   </ul>
 </div>
 
