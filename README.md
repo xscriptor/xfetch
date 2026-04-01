@@ -1,17 +1,34 @@
 <h1 align="center"> Xfetch </h1>
 
 <div align="center">
+<p align="center"><img src="./assets/icon.png" width="43" alt="Xscriptor logo" /></p>
 
 ![xfetch](https://xscriptor.github.io/badges/software/xfetch.svg) ![linux](https://xscriptor.github.io/badges/os/linux.svg) ![macos](https://xscriptor.github.io/badges/os/macos.svg) ![windows](https://xscriptor.github.io/badges/os/windows.svg) ![rust](https://xscriptor.github.io/badges/languages/rust.svg) ![mit](https://xscriptor.github.io/badges/licenses/mit.svg)
 
-A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.
+<p>A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.</p>
 
+<!--Menu-->
+<div align="left">
+  <h2>Menu</h2>
+  <ul>
+    <li><a href="#previews">Previews</a></li>
+    <li><a href="#quick-install">Quick Install</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#configuration">Configuration</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#related-documents">Related Documents</a></li>
+    <li><a href="#contribute">Contribute</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#about-the-developer">About</a></li>
+  </ul>
 </div>
 
 
-<p align="center"><img src="./assets/icon.png" width="100" alt="Xscriptor logo" /></p>
+<!-- previews-->
+</div>
 
-# Previews
+<h2  id="previews" align="center"> Previews</h2>
 
 <p align="center">
   <a href="./assets/previews/preview0.jpg">
@@ -39,27 +56,29 @@ A cross-platform system information fetching tool inspired by fastfetch and neof
 </details>
 
 
-## Quick Install
+<h2 id="quick-install" align="center"> Quick Install</h2>
 
-### Linux / macOS
+<h3> Linux / macOS </h3>
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | bash
 ```
 
-### Windows (PowerShell)
+<h3> Windows (PowerShell)</h3>
+
 ```powershell
 irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex
 ```
 
-## Features
+<h2 id="features" align="center"> Features</h2>
 
 - **Cross-platform**: Works on Linux, Windows, and macOS.
 - **Customizable**: Configure modules via `config.jsonc`.
 - **Fast**: Written in Rust for performance.
 
-## Installation
+<h2 id="installation" align="center"> Installation </h2>
 
-### From Source
+<h3> From Source </h3>
 
 1. Ensure you have Rust installed.
 2. Clone the repository.
@@ -75,7 +94,7 @@ Or install locally:
 cargo install --path .
 ```
 
-## Configuration
+<h2 id="configuration" align="center"> Configuration </h2>
 
 xfetch looks for a configuration file at:
 
@@ -110,7 +129,7 @@ xfetch looks for a configuration file at:
 }
 ```
 
-## Usage
+<h2 id="usage" align="center"> Usage</h2>
 
 Simply run `xfetch` in your terminal.
 
@@ -118,7 +137,20 @@ Simply run `xfetch` in your terminal.
 xfetch
 ```
 
-You can also specify a config file via CLI args (not yet fully implemented in CLI but supported in code structure).
+<h2 id="related-documents" align="center">Related Documents</h2>
 
-## License
-[MIT](LICENSE)
+<div align="left">
+  <ul>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/INSTALLATION.md">Installation</a></li>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/CONFIGURATION.md">Config</a></li>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/LAYOUTS.md">Layouts</a></li>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/UNINSTALLATION.md">Uninstall</a></li>
+  </ul>
+</div>
+
+<h3 align="center">If you want to contribute to the project, report bugs or security issues, or learn more about the developer, use the links below:</h3>
+
+<div align="center">
+<a id= "contribute" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a id="security" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/CONTRIBUTE.md">Contribute</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/SECURITY.md">Security</a> | <a id="about-the-developer" href="https://dev.xscriptor.com">DevWeb</a>  
+</div>
+
