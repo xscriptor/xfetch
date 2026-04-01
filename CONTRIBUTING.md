@@ -1,6 +1,6 @@
 # Contributing to xfetch
 
-First off, thank you for considering contributing to `xtop`! It's people like you that make this tool better.
+First off, thank you for considering contributing to `xfetch`! It's people like you that make this tool better.
 
 ## How Can I Contribute?
 
