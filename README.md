@@ -4,14 +4,14 @@
 
 ![xfetch](https://xscriptor.github.io/badges/software/xfetch.svg) ![linux](https://xscriptor.github.io/badges/os/linux.svg) ![macos](https://xscriptor.github.io/badges/os/macos.svg) ![windows](https://xscriptor.github.io/badges/os/windows.svg) ![rust](https://xscriptor.github.io/badges/languages/rust.svg) ![mit](https://xscriptor.github.io/badges/licenses/mit.svg)
 
-A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.
+<p>A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.</p>
 
 </div>
 
 
 <p align="center"><img src="./assets/icon.png" width="100" alt="Xscriptor logo" /></p>
 
-# Previews
+<h2 align="center"> Previews</h2>
 
 <p align="center">
   <a href="./assets/previews/preview0.jpg">
@@ -41,25 +41,27 @@ A cross-platform system information fetching tool inspired by fastfetch and neof
 
 ## Quick Install
 
-### Linux / macOS
+<h3> Linux / macOS </h3>
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | bash
 ```
 
-### Windows (PowerShell)
+<h3> Windows (PowerShell)</h3>
+
 ```powershell
 irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex
 ```
 
-## Features
+<h2 align="center"> Features</h2>
 
 - **Cross-platform**: Works on Linux, Windows, and macOS.
 - **Customizable**: Configure modules via `config.jsonc`.
 - **Fast**: Written in Rust for performance.
 
-## Installation
+<h2 align="center"> Installation </h2>
 
-### From Source
+<h3> From Source </h3>
 
 1. Ensure you have Rust installed.
 2. Clone the repository.
@@ -75,7 +77,7 @@ Or install locally:
 cargo install --path .
 ```
 
-## Configuration
+<h2 align="center"> Configuration </h2>
 
 xfetch looks for a configuration file at:
 
@@ -110,7 +112,7 @@ xfetch looks for a configuration file at:
 }
 ```
 
-## Usage
+<h2 align="center"> Usage</h2>
 
 Simply run `xfetch` in your terminal.
 
@@ -118,7 +120,10 @@ Simply run `xfetch` in your terminal.
 xfetch
 ```
 
-You can also specify a config file via CLI args (not yet fully implemented in CLI but supported in code structure).
+<p align="right">You can also specify a config file via CLI args (not yet fully implemented in CLI but supported in code structure).</p>
 
-## License
-[MIT](LICENSE)
+<p align="center">If you want to contribute to the project, report bugs or security issues, or learn more about the developer, use the links below:</p>
+<div align="center">
+<a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/CONTRIBUTE.md">Contribute</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/SECURITY.md">Security</a> | <a href="https://dev.xscriptor.com">DevWeb</a>  
+</div>
+
