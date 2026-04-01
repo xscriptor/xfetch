@@ -9,16 +9,19 @@
 
 <!--Menu-->
 <div align="left">
-<h2>Menu</h2>
-  <a href="#previews">Previews</a><br>
-  <a href="#quick-install">Quick Install</a><br>
-  <a href="#features">Features</a><br>
-  <a href="#installation">Installation</a><br>
-  <a href="#configuration">Configuration</a><br>
-  <a href="#usage">Usage</a><br>
-  <a href="#contribute">Contribute</a><br>
-  <a href="#security">Security</a><br>
-  <a href="#about-the-developer">About</a>
+  <h2>Menu</h2>
+  <ul>
+    <li><a href="#previews">Previews</a></li>
+    <li><a href="#quick-install">Quick Install</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#configuration">Configuration</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#related-documents">Related Documents</a></li>
+    <li><a href="#contribute">Contribute</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#about-the-developer">About</a></li>
+  </ul>
 </div>
 
 
@@ -134,9 +137,19 @@ Simply run `xfetch` in your terminal.
 xfetch
 ```
 
-<p align="right">You can also specify a config file via CLI args (not yet fully implemented in CLI but supported in code structure).</p>
+<h2 id="related-documents" align="center">Related Documents</h2>
 
-<p align="center">If you want to contribute to the project, report bugs or security issues, or learn more about the developer, use the links below:</p>
+<div align="left">
+  <ul>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/INSTALLATION.md">Installation</a></li>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/CONFIGURATION.md">Config</a></li>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/LAYOUTS.md">Layouts</a></li>
+    <li><a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/docs/UNINSTALLATION.md">Uninstall</a></li>
+  </ul>
+</div>
+
+<h3 align="center">If you want to contribute to the project, report bugs or security issues, or learn more about the developer, use the links below:</h3>
+
 <div align="center">
 <a id= "contribute" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a id="security" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/CONTRIBUTE.md">Contribute</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/SECURITY.md">Security</a> | <a id="about-the-developer" href="https://dev.xscriptor.com">DevWeb</a>  
 </div>
