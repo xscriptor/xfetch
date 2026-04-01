@@ -148,9 +148,9 @@ xfetch
   </ul>
 </div>
 
-<h3 align="center">If you want to contribute to the project, report bugs or security issues, or learn more about the developer, use the links below:</h3>
+<h3 align="center">Contribute to the project, report issues, or connect with the developer using the links below</h3>
 
 <div align="center">
-<a id= "contribute" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a id="security" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/CONTRIBUTE.md">Contribute</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/SECURITY.md">Security</a> | <a id="about-the-developer" href="https://dev.xscriptor.com">DevWeb</a>  
+<a id= "contribute" href="https://github.com/xscriptor/xfetch/blob/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a id="security" href="https://github.com/xscriptor/xfetch/blob/main/CONTRIBUTING.md">Contribute</a> | <a href="https://github.com/xscriptor/xfetch/blob/main/SECURITY.md">Security</a> | <a id="about-the-developer" href="https://dev.xscriptor.com">DevWeb</a>  
 </div>
 
