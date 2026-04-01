@@ -1,17 +1,31 @@
 <h1 align="center"> Xfetch </h1>
 
 <div align="center">
+<p align="center"><img src="./assets/icon.png" width="100" alt="Xscriptor logo" /></p>
 
 ![xfetch](https://xscriptor.github.io/badges/software/xfetch.svg) ![linux](https://xscriptor.github.io/badges/os/linux.svg) ![macos](https://xscriptor.github.io/badges/os/macos.svg) ![windows](https://xscriptor.github.io/badges/os/windows.svg) ![rust](https://xscriptor.github.io/badges/languages/rust.svg) ![mit](https://xscriptor.github.io/badges/licenses/mit.svg)
 
 <p>A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.</p>
 
+<!--Menu-->
+
+<div align="left">
+  <a href="#previews" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Previews</a>
+  <a href="#quick-install" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Quick Install</a>
+  <a href="#features" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Features</a>
+  <a href="#installation" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Installation</a>
+  <a href="#configuration" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Configuration</a>
+  <a href="#usage" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Usage</a>
+  <a href="#contribute" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Contribute</a>
+  <a href="#security" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Security</a>
+  <a href="#about-the-developer" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">About</a>
 </div>
 
 
-<p align="center"><img src="./assets/icon.png" width="100" alt="Xscriptor logo" /></p>
+<!-- previews-->
+</div>
 
-<h2 align="center"> Previews</h2>
+<h2  id="previews" align="center"> Previews</h2>
 
 <p align="center">
   <a href="./assets/previews/preview0.jpg">
@@ -39,7 +53,7 @@
 </details>
 
 
-## Quick Install
+<h2 id="quick-install" align="center"> Quick Install</h2>
 
 <h3> Linux / macOS </h3>
 
@@ -53,13 +67,13 @@ curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | 
 irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex
 ```
 
-<h2 align="center"> Features</h2>
+<h2 id="features" align="center"> Features</h2>
 
 - **Cross-platform**: Works on Linux, Windows, and macOS.
 - **Customizable**: Configure modules via `config.jsonc`.
 - **Fast**: Written in Rust for performance.
 
-<h2 align="center"> Installation </h2>
+<h2 id="installation" align="center"> Installation </h2>
 
 <h3> From Source </h3>
 
@@ -77,7 +91,7 @@ Or install locally:
 cargo install --path .
 ```
 
-<h2 align="center"> Configuration </h2>
+<h2 id="configuration" align="center"> Configuration </h2>
 
 xfetch looks for a configuration file at:
 
@@ -112,7 +126,7 @@ xfetch looks for a configuration file at:
 }
 ```
 
-<h2 align="center"> Usage</h2>
+<h2 id="usage" align="center"> Usage</h2>
 
 Simply run `xfetch` in your terminal.
 
@@ -124,6 +138,6 @@ xfetch
 
 <p align="center">If you want to contribute to the project, report bugs or security issues, or learn more about the developer, use the links below:</p>
 <div align="center">
-<a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/CONTRIBUTE.md">Contribute</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/SECURITY.md">Security</a> | <a href="https://dev.xscriptor.com">DevWeb</a>  
+<a id= "contribute" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a id="security" href="https://raw.githubusercontent.com/xscriptor/xfetch/main/CONTRIBUTE.md">Contribute</a> | <a href="https://raw.githubusercontent.com/xscriptor/xfetch/main/SECURITY.md">Security</a> | <a id="about-the-developer" href="https://dev.xscriptor.com">DevWeb</a>  
 </div>
 
