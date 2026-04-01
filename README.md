@@ -1,24 +1,24 @@
 <h1 align="center"> Xfetch </h1>
 
 <div align="center">
-<p align="center"><img src="./assets/icon.png" width="100" alt="Xscriptor logo" /></p>
+<p align="center"><img src="./assets/icon.png" width="43" alt="Xscriptor logo" /></p>
 
 ![xfetch](https://xscriptor.github.io/badges/software/xfetch.svg) ![linux](https://xscriptor.github.io/badges/os/linux.svg) ![macos](https://xscriptor.github.io/badges/os/macos.svg) ![windows](https://xscriptor.github.io/badges/os/windows.svg) ![rust](https://xscriptor.github.io/badges/languages/rust.svg) ![mit](https://xscriptor.github.io/badges/licenses/mit.svg)
 
 <p>A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.</p>
 
 <!--Menu-->
-
 <div align="left">
-  <a href="#previews" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Previews</a>
-  <a href="#quick-install" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Quick Install</a>
-  <a href="#features" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Features</a>
-  <a href="#installation" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Installation</a>
-  <a href="#configuration" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Configuration</a>
-  <a href="#usage" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Usage</a>
-  <a href="#contribute" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Contribute</a>
-  <a href="#security" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">Security</a>
-  <a href="#about-the-developer" style="text-decoration:none;background:#5B2C6F;border-radius:999px;padding:12px 14px;margin:4px;color:#FFD700;font-size:13px;">About</a>
+<h2>Menu</h2>
+  <a href="#previews">Previews</a><br>
+  <a href="#quick-install">Quick Install</a><br>
+  <a href="#features">Features</a><br>
+  <a href="#installation">Installation</a><br>
+  <a href="#configuration">Configuration</a><br>
+  <a href="#usage">Usage</a><br>
+  <a href="#contribute">Contribute</a><br>
+  <a href="#security">Security</a><br>
+  <a href="#about-the-developer">About</a>
 </div>
 
 
