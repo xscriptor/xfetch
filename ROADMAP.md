@@ -147,4 +147,4 @@
 - [ ] Publish blog posts about features (#138)
 - [ ] Create comparison guide with similar tools (#139)
 - [ ] Setup Discord/Slack community channel (#140)
-- [ ] Create contribution bounty program (#141)
+- [ ] Create contribution program (#141)

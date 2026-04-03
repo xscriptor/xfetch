@@ -175,6 +175,10 @@ def remove_label(number: int, label: str, repo: str | None) -> None:
         pass  # label wasn't on the issue
 
 
+def update_issue_title(number: int, title: str, repo: str | None) -> None:
+    gh(["issue", "edit", str(number), "--title", title], repo)
+
+
 # ── Roadmap file updater ─────────────────────────────────────────────────────
 
 def update_roadmap_line(path: Path, line_number: int, title: str,
@@ -218,6 +222,12 @@ def sync_task(task: Task, repo: str | None, dry_run: bool) -> list[str]:
     has_in_progress = any(
         l["name"] == IN_PROGRESS_LABEL for l in issue.get("labels", [])
     )
+    issue_title = issue["title"]
+
+    if issue_title.strip() != task.title.strip():
+        actions.append(f"  rename #{task.issue_number} to '{task.title}'")
+        if not dry_run:
+            update_issue_title(task.issue_number, task.title, repo)
 
     if task.state == TaskState.DONE:
         if is_open:
