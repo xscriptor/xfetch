@@ -107,8 +107,8 @@
 
 ## Phase 10 · Community & Ecosystem <!-- phase:phase-10:ecosystem -->
 
-- [ ] Create themes repository / registry (#110)
-- [ ] Implement theme download manager (#111)
+- [/] Create themes repository / registry (#110)
+- [/] Implement theme download manager (#111)
 - [ ] Create online theme preview tool (#112)
 - [ ] Setup community theme contributions process (#113)
 - [ ] Create plugin system for custom modules (#114)
@@ -142,9 +142,9 @@
 
 - [ ] Create comprehensive user manual (#134)
 - [ ] Create video tutorials (#135)
-- [ ] Setup project website with showcase (#136)
-- [ ] Create developer documentation (#137)
+- [/] Setup project website with showcase (#136)
+- [x] Create developer documentation (#137)
 - [ ] Publish blog posts about features (#138)
 - [ ] Create comparison guide with similar tools (#139)
 - [ ] Setup Discord/Slack community channel (#140)
-- [ ] Create contribution program (#141)
+- [/] Create contribution program (#141)
