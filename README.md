@@ -160,7 +160,7 @@ xfetch
 
 
 
-<div align="center">
+<div id="about-the-developer" align="center">
 <h2>X</h2>
 
 <a href="https://dev.xscriptor.com">
