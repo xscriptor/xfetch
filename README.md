@@ -1,7 +1,7 @@
 <h1 align="center"> Xfetch </h1>
 
 <div align="center">
-<p align="center"><img src="./assets/icon.png" width="43" alt="Xscriptor logo" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/icon.svg" width="80" alt="XFetch logo" /></p>
 
 ![xfetch](https://xscriptor.github.io/badges/software/xfetch.svg) ![linux](https://xscriptor.github.io/badges/os/linux.svg) ![macos](https://xscriptor.github.io/badges/os/macos.svg) ![windows](https://xscriptor.github.io/badges/os/windows.svg) ![rust](https://xscriptor.github.io/badges/languages/rust.svg) ![mit](https://xscriptor.github.io/badges/licenses/mit.svg)
 
@@ -11,16 +11,23 @@
 <div align="left">
   <h2>Menu</h2>
   <ul>
-    <li><a href="#previews">Previews</a></li>
-    <li><a href="#quick-install">Quick Install</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#installation">Installation</a></li>
-    <li><a href="#configuration">Configuration</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#related-documents">Related Documents</a></li>
-    <li><a href="#contribute">Contribute</a></li>
-    <li><a href="#security">Security</a></li>
-    <li><a href="#about-the-developer">About</a></li>
+    <li><a href="#previews">Previews <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/device-camera.svg"/></a></li>
+    <li><a href="#quick-install">Quick Install </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/pass-filled.svg"/></li>
+    <li><a href="#features">Features </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/grabber.svg" /></li>
+    <li><a href="#installation">Installation </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/github-action.svg" /></li>
+    <li><a href="#configuration">Configuration </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/gear.svg" /></li>
+    <li><a href="#usage">Usage </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/flame.svg"/></li>
+    <li><a href="#related-documents">Related Documents </a>
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/diff-multiple.svg" />
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/repo-forked.svg" />
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/github-alt.svg" />
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/key.svg" />
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/git-merge.svg" />
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/symbol-keyword.svg" />
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/symbol-key.svg" />
+    <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/file-submodule.svg" />
+    </li>
+    <li><a href="#about-the-developer">About X </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/regex.svg"/></li>
   </ul>
 </div>
 
@@ -32,24 +39,20 @@
 
 <p align="center">
   <a href="./assets/previews/preview0.jpg">
-    <img src="./assets/previews/preview0.jpg" alt="Main preview" width="850"/>
+    <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview03.png" alt="Main preview" width="850"/>
   </a>
 </p>
 
 <details>
   <summary>More previews</summary>
 
-  <table>
+  <table align="center">
     <tr>
       <td align="center">
-        <a href="./assets/previews/preview1.png">
-          <img src="./assets/previews/preview1.png" alt="Preview 2" width="380"/>
-        </a>
+        <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview02.png" alt="Preview 2" width="490"/>
       </td>
       <td align="center">
-        <a href="./assets/previews/preview2.jpg">
-          <img src="./assets/previews/preview2.jpg" alt="Preview 3" width="380"/>
-        </a>
+        <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview01.png" alt="Preview 3" width="490"/>
       </td>
     </tr>
   </table>
@@ -58,13 +61,13 @@
 
 <h2 id="quick-install" align="center"> Quick Install</h2>
 
-<h3> Linux / macOS </h3>
+<h3> Linux <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/terminal-linux.svg" /> / <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/terminal.svg" /> macOS </h3>
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | bash
 ```
 
-<h3> Windows (PowerShell)</h3>
+<h3> Windows (PowerShell) <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/terminal-powershell.svg" /></h3>
 
 ```powershell
 irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex
@@ -146,12 +149,30 @@ xfetch
     <li><a href="https://github.com/xscriptor/xfetch/blob/main/docs/LAYOUTS.md">Layouts</a></li>
     <li><a href="https://github.com/xscriptor/xfetch/blob/main/docs/UNINSTALLATION.md">Uninstall</a></li>
     <li><a href="https://github.com/xscriptor/xfetch/blob/main/ROADMAP.md">Roadmap</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/LICENSE">License</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/CONTRIBUTING.md">Contributing</a></li>
+    <li><a href="https://github.com/xscriptor/xfetch/blob/main/SECURITY.md">Security</a></li>
   </ul>
 </div>
 
-<h3 align="center">Contribute to the project, report issues, or connect with the developer using the links below</h3>
+<h3 align="center">Contribute to the project, report issues, or connect with the developer using the links around</h3>
+
+
+
 
 <div align="center">
-<a id= "contribute" href="https://github.com/xscriptor/xfetch/blob/main/LICENSE">MIT-License</a> | <a href="https://github.com/xscriptor/">X</a> | <a id="security" href="https://github.com/xscriptor/xfetch/blob/main/CONTRIBUTING.md">Contribute</a> | <a href="https://github.com/xscriptor/xfetch/blob/main/SECURITY.md">Security</a> | <a id="about-the-developer" href="https://dev.xscriptor.com">DevWeb</a>  
-</div>
+<h2>X</h2>
 
+<a href="https://dev.xscriptor.com">
+  <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/verified-filled.svg" width="24" alt="X Web" />
+</a>
+ & 
+<a href="https://github.com/xscriptor">
+  <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/github.svg" width="24" alt="X Github Profile" />
+</a>
+ & 
+<a href="https://www.xscriptor.com">
+  <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/quotes.svg" width="24" alt="Xscriptor web" />
+</a>
+
+</div>
