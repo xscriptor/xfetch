@@ -54,3 +54,21 @@ pub fn get_logo_data(config: &Config) -> (Vec<String>, bool, usize) {
     }
     (ascii_lines, image_printed, ascii_width)
 }
+
+
+//tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::config::Config;
+
+    #[test]
+    fn test_get_logo_data_default() {
+        // Verifica que el comportamiento por defecto devuelva ASCII y no marque imagen impresa
+        let config = Config::default();
+        let (ascii_lines, is_image, _width) = get_logo_data(&config);
+        
+        assert!(!is_image);
+        assert!(!ascii_lines.is_empty());
+    }
+}

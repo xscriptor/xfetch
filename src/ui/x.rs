@@ -44,6 +44,7 @@ mod tests {
     use super::*;
 
     #[test]
+    //verify that the expand_path function correctly expands the tilde to the home directory
     fn test_expand_path_home() {
         let path = expand_path("~/tests");
         let path_str = path.to_string_lossy();
@@ -53,6 +54,7 @@ mod tests {
     }
 
     #[test]
+    //verify that the expand_path function returns the same path if it does not start with a tilde
     fn test_security_path_traversal_and_null_byte() {
         // Cybersec: Injection test for nulled bytes and path traversal
         // Rust is memory safe, but we validate that the function returns the path

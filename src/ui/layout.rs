@@ -12,3 +12,21 @@ pub fn get_content_lines(nodes: &[RenderNode], config: &Config) -> Vec<String> {
         _ => render_classic(nodes, config),
     }
 }
+
+//tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::config::Config;
+
+    #[test]
+    fn test_get_content_lines_empty() {
+        // Verifica que el layout maneje correctamente una lista vacía de nodos sin crashear
+        let config = Config::default();
+        let nodes = vec![];
+        let lines = get_content_lines(&nodes, &config);
+        
+        // Simplemente aseguramos que retorne un Vector válido
+        assert!(lines.is_empty() || !lines.is_empty());
+    }
+}

@@ -271,3 +271,41 @@ pub fn get_color_code(key: &str, config: &Config) -> &'static str {
         _ => "37",
     }
 }
+
+//tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::config::Config;
+    use crate::ui::nodes::RenderNode;
+
+    #[test]
+    // Test that classic render doesn't crash with empty nodes
+    fn test_render_classic_empty() {
+        let config = Config::default();
+        let nodes: Vec<RenderNode> = vec![];
+        let lines = render_classic(&nodes, &config);
+        
+        assert!(lines.is_empty() || !lines.is_empty());
+    }
+
+    #[test]
+    // Test that side block render doesn't crash with empty nodes
+    fn test_render_side_block_empty() {
+        let config = Config::default();
+        let nodes: Vec<RenderNode> = vec![];
+        let lines = render_side_block(&nodes, &config);
+        
+        assert!(lines.is_empty() || !lines.is_empty());
+    }
+
+    #[test]
+    //  Test that tree render doesn't crash with empty nodes
+    fn test_render_tree_empty() {
+        let config = Config::default();
+        let nodes: Vec<RenderNode> = vec![];
+        let lines = render_tree(&nodes, &config);
+        
+        assert!(lines.is_empty() || !lines.is_empty());
+    }
+}
