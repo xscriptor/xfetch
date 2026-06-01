@@ -21,12 +21,12 @@ mod tests {
 
     #[test]
     fn test_get_content_lines_empty() {
-        // Verifica que el layout maneje correctamente una lista vacía de nodos sin crashear
+        // Verify that the layout correctly handles an empty list of nodes without crashing
         let config = Config::default();
         let nodes = vec![];
         let lines = get_content_lines(&nodes, &config);
         
-        // Simplemente aseguramos que retorne un Vector válido
+        // We simply ensure it returns a valid vector
         assert!(lines.is_empty() || !lines.is_empty());
     }
 }

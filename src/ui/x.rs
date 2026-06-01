@@ -59,7 +59,7 @@ mod tests {
         // Cybersec: Injection test for nulled bytes and path traversal
         // Rust is memory safe, but we validate that the function returns the path
         // without panicking or corrupting it when receiving malicious input.
-        let malicius_input = "../../../etc/passwd\0archivo_falso.png";
+        let malicius_input = "../../../etc/passwd\0malicious_file.png";
         let path = expand_path(malicius_input);
         let path_str = path.to_string_lossy();
 

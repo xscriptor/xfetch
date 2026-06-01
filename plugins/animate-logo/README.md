@@ -76,12 +76,12 @@ All characters fade in and out in a warm amber tone (breathing effect).
 
 ### `frame` — ASCII Frame Animation
 
-Cycles through multiple ASCII art frames to create animations. Puedes definirlas
-como un **array de archivos** o en un **solo archivo** separado por `===`:
+Cycles through multiple ASCII art frames to create animations. You can define them
+as an **array of files** or in a **single file** separated by `===`:
 
-#### Un solo archivo con separador `===`
+#### Single file with `===` separator
 
-Crea un archivo (ej. `blink.txt`) con todas las frames separadas por `===`:
+Create a file (e.g. `blink.txt`) with all frames separated by `===`:
 
 ```
   .---.
@@ -122,7 +122,7 @@ Crea un archivo (ej. `blink.txt`) con todas las frames separadas por `===`:
 }
 ```
 
-#### Múltiples archivos
+#### Multiple files
 
 ```jsonc
 {
@@ -142,8 +142,8 @@ Crea un archivo (ej. `blink.txt`) con todas las frames separadas por `===`:
 }
 ```
 
-> El campo `ascii` se usa como fallback estático.
-> Pon `fps` bajo (2-6) para animaciones por frames. El delimitador debe ir en su propia línea.
+> The `ascii` field is used as a static fallback.
+> Use low `fps` (2-6) for frame animations. The delimiter must be on its own line.
 
 ### `none`
 
@@ -176,7 +176,7 @@ plugins/animate-logo/assets/xfetch_logo.txt
 
 ### Blinking Eye (frame animation)
 
-Incluido en un solo archivo:
+Included in a single file:
 
 ```
 plugins/animate-logo/assets/blink.txt

