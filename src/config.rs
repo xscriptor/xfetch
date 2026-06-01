@@ -32,6 +32,13 @@ pub struct Config {
     pub logo_animation: Option<LogoAnimationConfig>,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(untagged)]
+pub enum FramePaths {
+    Single(String),
+    Multiple(Vec<String>),
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone, Default)]
 #[serde(default)]
 pub struct LogoAnimationConfig {
@@ -40,6 +47,8 @@ pub struct LogoAnimationConfig {
     pub duration_ms: Option<u64>,
     #[serde(rename = "loop")]
     pub loop_enabled: Option<bool>,
+    pub style: Option<String>,
+    pub frames_path: Option<FramePaths>,
 }
 
 impl Default for Config {

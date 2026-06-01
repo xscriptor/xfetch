@@ -71,9 +71,66 @@
 <h2>Animate Logo Plugin</h2>
 <p>
   The animate-logo plugin lives in <strong>plugins/animate-logo</strong>. It reads the logo lines
-  and outputs animated frames by applying a moving color sweep. The core will only run the plugin
-  when stdout is a TTY, so non-interactive output stays static.
+  and outputs animated frames. The core will only run the plugin when stdout is a TTY, so
+  non-interactive output stays static.
 </p>
+
+<h3>Animation Styles</h3>
+<p>
+  The plugin supports multiple styles controlled by the <code>style</code> field in the
+  <code>logo_animation</code> config section:
+</p>
+<table>
+  <thead>
+    <tr><th>Style</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>sweep</code></td><td>Color sweep left-to-right (default)</td></tr>
+    <tr><td><code>wave</code></td><td>Sine-wave color pattern that moves across</td></tr>
+    <tr><td><code>rainbow</code></td><td>Full RGB rainbow gradient shifting over time</td></tr>
+    <tr><td><code>sparkle</code></td><td>Random characters light up in bright colors</td></tr>
+    <tr><td><code>breathing</code></td><td>Warm amber fade in/out (breathing effect)</td></tr>
+    <tr><td><code>frame</code></td><td>Cycles through multiple ASCII art files</td></tr>
+    <tr><td><code>none</code></td><td>No coloring, display as-is</td></tr>
+  </tbody>
+</table>
+
+<h3>Frame Animation</h3>
+<p>
+  Use <code>style: "frame"</code> con <code>frames_path</code> para animaciones con
+  múltiples frames ASCII. Puedes usar un <strong>solo archivo</strong> con las frames
+  separadas por <code>===</code> en su propia línea, o un <strong>array de archivos</strong>.
+</p>
+
+<pre><code class="language-jsonc">{
+  "ascii": "~/.config/xfetch/logos/blink.txt",
+  "logo_animation": {
+    "plugin": "animate-logo",
+    "style": "frame",
+    "fps": 4,
+    "loop": true,
+    "frames_path": "~/.config/xfetch/logos/blink.txt"
+  }
+}
+</code></pre>
+
+<p>O con múltiples archivos:</p>
+
+<pre><code class="language-jsonc">{
+  "ascii": "~/.config/xfetch/logos/blink_open.txt",
+  "logo_animation": {
+    "plugin": "animate-logo",
+    "style": "frame",
+    "fps": 4,
+    "frames_path": [
+      "~/.config/xfetch/logos/blink_open.txt",
+      "~/.config/xfetch/logos/blink_half.txt",
+      "~/.config/xfetch/logos/blink_closed.txt",
+      "~/.config/xfetch/logos/blink_half.txt"
+    ]
+  }
+}
+</code></pre>
 
 <h3>Build and Install</h3>
 <pre><code class="language-bash">cargo install --path plugins/animate-logo</code></pre>
@@ -96,6 +153,7 @@
   "ascii": "/path/to/xfetch/plugins/animate-logo/assets/xfetch_logo.txt",
   "logo_animation": {
     "plugin": "animate-logo",
+    "style": "sweep",
     "fps": 12,
     "duration_ms": 1200,
     "loop": false

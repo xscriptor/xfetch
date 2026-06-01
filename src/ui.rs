@@ -1,4 +1,4 @@
-use crate::config::Config;
+use crate::config::{Config, FramePaths, LogoAnimationConfig};
 use crate::info::Info;
 use crate::plugins::run_logo_animation_plugin;
 use console::strip_ansi_codes;
@@ -10,6 +10,41 @@ mod x;
 mod logo;
 mod layout;
 mod print;
+
+fn load_animation_frames(config: &LogoAnimationConfig) -> Option<Vec<Vec<String>>> {
+    let paths = match config.frames_path.as_ref()? {
+        FramePaths::Single(path) => vec![path.clone()],
+        FramePaths::Multiple(paths) => paths.clone(),
+    };
+    let mut frames = Vec::new();
+    for path_str in &paths {
+        let expanded = crate::ui::x::expand_path(path_str);
+        if let Ok(content) = std::fs::read_to_string(&expanded) {
+            let sub_frames = split_ascii_frames(&content);
+            if sub_frames.is_empty() {
+                let lines: Vec<String> = content.lines().map(|l| l.to_string()).collect();
+                if !lines.is_empty() {
+                    frames.push(lines);
+                }
+            } else {
+                frames.extend(sub_frames);
+            }
+        }
+    }
+    if frames.is_empty() { None } else { Some(frames) }
+}
+
+fn split_ascii_frames(content: &str) -> Vec<Vec<String>> {
+    let sep = "\n===\n";
+    if !content.contains(sep) {
+        return Vec::new();
+    }
+    content
+        .split(sep)
+        .map(|block| block.lines().map(|l| l.to_string()).collect())
+        .filter(|frame: &Vec<String>| !frame.is_empty() && !frame.iter().all(|l| l.trim().is_empty()))
+        .collect()
+}
 
 
 
@@ -33,8 +68,9 @@ pub fn draw(info: &Info, config: &Config) {
         if let Some(animation_config) = &config.logo_animation {
             if let Some(plugin_name) = animation_config.plugin.as_deref() {
                 if stdout().is_terminal() {
+                    let frame_sets = load_animation_frames(animation_config);
                     if let Ok(mut frames) =
-                        run_logo_animation_plugin(plugin_name, animation_config, &ascii_lines)
+                        run_logo_animation_plugin(plugin_name, animation_config, &ascii_lines, frame_sets)
                     {
                         if !config.show_colors {
                             for frame in &mut frames {

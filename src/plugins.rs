@@ -16,6 +16,7 @@ struct LogoAnimationRequest<'a> {
     version: u32,
     kind: &'a str,
     lines: &'a [String],
+    frames: Option<Vec<Vec<String>>>,
     args: LogoAnimationArgs,
 }
 
@@ -25,6 +26,7 @@ struct LogoAnimationArgs {
     duration_ms: Option<u64>,
     #[serde(rename = "loop")]
     loop_enabled: Option<bool>,
+    style: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -36,6 +38,7 @@ pub fn run_logo_animation_plugin(
     plugin_name: &str,
     config: &LogoAnimationConfig,
     lines: &[String],
+    frames: Option<Vec<Vec<String>>>,
 ) -> Result<Vec<AnimationFrame>, String> {
     let plugin_path = find_plugin_binary(plugin_name)
         .ok_or_else(|| format!("Plugin not found: {}", plugin_name))?;
@@ -44,10 +47,12 @@ pub fn run_logo_animation_plugin(
         version: 1,
         kind: "logo_animation",
         lines,
+        frames,
         args: LogoAnimationArgs {
             fps: config.fps,
             duration_ms: config.duration_ms,
             loop_enabled: config.loop_enabled,
+            style: config.style.clone(),
         },
     };
 
