@@ -189,8 +189,6 @@ fn install_remote_plugin(name: &str, repo_url: &str) -> Result<(), String> {
         .args([
             "clone",
             "--depth", "1",
-            "--filter=blob:none",
-            "--sparse",
             repo_url,
         ])
         .arg(&temp_dir)
@@ -204,15 +202,7 @@ fn install_remote_plugin(name: &str, repo_url: &str) -> Result<(), String> {
         return Err("Failed to clone repository".to_string());
     }
 
-    let sparse_checkout = Command::new("git")
-        .args(["sparse-checkout", "set", &format!("plugins/{}", name)])
-        .current_dir(&temp_dir)
-        .stdout(Stdio::inherit())
-        .stderr(Stdio::inherit())
-        .status()
-        .map_err(|_| "Failed to set sparse checkout".to_string())?;
-
-    if !sparse_checkout.success() || !plugin_path.is_dir() {
+    if !plugin_path.is_dir() {
         let _ = fs::remove_dir_all(&temp_dir);
         return Err(format!(
             "Plugin '{}' not found in repository '{}'.\n\
@@ -225,6 +215,25 @@ fn install_remote_plugin(name: &str, repo_url: &str) -> Result<(), String> {
 
     let _ = fs::remove_dir_all(&temp_dir);
     result
+}
+
+pub fn remove_plugin(name: &str) -> Result<(), String> {
+    let binary_name = plugin_binary_name(name);
+    let plugin_dir = default_plugin_dir();
+    let binary_path = plugin_dir.join(&binary_name);
+
+    if binary_path.is_file() {
+        fs::remove_file(&binary_path)
+            .map_err(|err| format!("Failed to remove plugin '{}': {}", name, err))?;
+        println!("Removed plugin '{}'", name);
+        Ok(())
+    } else {
+        Err(format!(
+            "Plugin '{}' is not installed (not found at {})",
+            name,
+            binary_path.display()
+        ))
+    }
 }
 
 pub fn list_plugins() -> Result<Vec<(String, PathBuf)>, String> {

@@ -5,7 +5,7 @@ mod ui;
 
 use crate::config::{generate_config, load_config};
 use crate::info::Info;
-use crate::plugins::{install_plugin, list_plugins};
+use crate::plugins::{install_plugin, list_plugins, remove_plugin};
 use crate::ui::draw;
 use clap::{Parser, Subcommand};
 
@@ -15,7 +15,7 @@ use clap::{Parser, Subcommand};
     version,
     about,
     long_about = None,
-    after_help = "Examples:\n  xfetch\n  xfetch --config ~/.config/xfetch/config.jsonc\n  xfetch --gen-config\n  xfetch plugin install ./plugins/animate-logo\n  xfetch plugin list"
+    after_help = "Examples:\n  xfetch\n  xfetch --config ~/.config/xfetch/config.jsonc\n  xfetch --gen-config\n  xfetch plugin install ./plugins/animate-logo\n  xfetch plugin list\n  xfetch plugin remove animate-logo"
 )]
 struct Cli {
     #[command(subcommand)]
@@ -57,6 +57,11 @@ enum PluginCommands {
     },
     /// List installed plugins
     List,
+    /// Remove an installed plugin
+    Remove {
+        /// Name of the plugin to remove (e.g., animate-logo)
+        name: String,
+    },
 }
 
 fn main() {
@@ -100,6 +105,15 @@ fn main() {
                             }
                         }
                     }
+                    Err(err) => {
+                        eprintln!("Error: {}", err);
+                        std::process::exit(1);
+                    }
+                }
+            }
+            PluginCommands::Remove { name } => {
+                match remove_plugin(&name) {
+                    Ok(()) => {}
                     Err(err) => {
                         eprintln!("Error: {}", err);
                         std::process::exit(1);
