@@ -64,7 +64,7 @@ mod tests {
 
     #[test]
     fn test_get_logo_data_default() {
-        // Verifica que el comportamiento por defecto devuelva ASCII y no marque imagen impresa
+        // Verify that the default behavior returns ASCII and does not mark an image as printed
         let config = Config::default();
         let (ascii_lines, is_image, _width) = get_logo_data(&config);
         

@@ -97,9 +97,9 @@
 
 <h3>Frame Animation</h3>
 <p>
-  Use <code>style: "frame"</code> con <code>frames_path</code> para animaciones con
-  múltiples frames ASCII. Puedes usar un <strong>solo archivo</strong> con las frames
-  separadas por <code>===</code> en su propia línea, o un <strong>array de archivos</strong>.
+  Use <code>style: "frame"</code> with <code>frames_path</code> for animations with
+  multiple ASCII frames. You can use a <strong>single file</strong> with frames
+  separated by <code>===</code> on their own line, or an <strong>array of files</strong>.
 </p>
 
 <pre><code class="language-jsonc">{
@@ -114,7 +114,7 @@
 }
 </code></pre>
 
-<p>O con múltiples archivos:</p>
+<p>Or with multiple files:</p>
 
 <pre><code class="language-jsonc">{
   "ascii": "~/.config/xfetch/logos/blink_open.txt",
