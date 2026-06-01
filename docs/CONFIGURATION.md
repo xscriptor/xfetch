@@ -126,6 +126,23 @@ xfetch supports displaying images (png, jpg, svg) if your terminal supports it (
 }
 ```
 
+## Logo Animation (Plugin)
+
+xfetch can animate the ASCII logo via an external plugin. The animation runs only on TTY terminals and only for ASCII logos.
+
+```jsonc
+{
+    "logo_animation": {
+        "plugin": "animate-logo",
+        "fps": 12,
+        "duration_ms": 1200,
+        "loop": false
+    }
+}
+```
+
+For plugin installation and the protocol details, see [docs/PLUGINS.md](docs/PLUGINS.md).
+
 ## Layouts
 
 ### Default Layout

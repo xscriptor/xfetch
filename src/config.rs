@@ -29,6 +29,17 @@ pub struct Config {
     pub header_icons: Option<Vec<String>>,
     pub footer_text: Option<String>,
     pub palette_style: Option<String>, // "dots", "squares", "lines", "triangles"
+    pub logo_animation: Option<LogoAnimationConfig>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[serde(default)]
+pub struct LogoAnimationConfig {
+    pub plugin: Option<String>,
+    pub fps: Option<u64>,
+    pub duration_ms: Option<u64>,
+    #[serde(rename = "loop")]
+    pub loop_enabled: Option<bool>,
 }
 
 impl Default for Config {
@@ -78,6 +89,7 @@ impl Default for Config {
             header_icons: None,
             footer_text: None,
             palette_style: None,
+            logo_animation: None,
         }
     }
 }

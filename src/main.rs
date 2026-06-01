@@ -1,5 +1,6 @@
 mod config;
 mod info;
+mod plugins;
 mod ui;
 
 use crate::config::{generate_config, load_config};
