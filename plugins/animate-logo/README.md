@@ -21,6 +21,36 @@ plugins/animate-logo/target/release/xfetch-plugin-animate-logo
 cargo install --path plugins/animate-logo
 ```
 
+## Sample Animated Logo
+
+A sample ASCII logo is included at:
+
+```
+plugins/animate-logo/assets/xfetch_logo.txt
+```
+
+To test end-to-end animation:
+
+1. Install the plugin (see above).
+2. Set the ASCII logo path and the animation plugin in your config:
+
+```jsonc
+{
+  "ascii": "/path/to/xfetch/plugins/animate-logo/assets/xfetch_logo.txt",
+  "logo_animation": {
+    "plugin": "animate-logo",
+    "fps": 12,
+    "duration_ms": 1200,
+    "loop": false
+  }
+}
+```
+
+3. Run `xfetch` in a TTY-capable terminal.
+
+The plugin animates by sweeping colors across the logo characters. If you prefer a
+static logo, remove the `logo_animation` section.
+
 ## Protocol
 
 ### Request

@@ -81,6 +81,32 @@
 <h3>Manual Run</h3>
 <pre><code class="language-bash">cat request.json | xfetch-plugin-animate-logo</code></pre>
 
+<h2>End-to-End Test</h2>
+<p>
+  This example uses the sample ASCII logo stored in the repository and enables the
+  animate-logo plugin for a full end-to-end test.
+</p>
+<ol>
+  <li>Install the plugin: <code>cargo install --path plugins/animate-logo</code></li>
+  <li>Point the ASCII logo to <code>plugins/animate-logo/assets/xfetch_logo.txt</code></li>
+  <li>Enable the plugin in your config:</li>
+</ol>
+
+<pre><code class="language-jsonc">{
+  "ascii": "/path/to/xfetch/plugins/animate-logo/assets/xfetch_logo.txt",
+  "logo_animation": {
+    "plugin": "animate-logo",
+    "fps": 12,
+    "duration_ms": 1200,
+    "loop": false
+  }
+}
+</code></pre>
+
+<p>
+  Run <code>xfetch</code> in a TTY-capable terminal to see the animated logo.
+</p>
+
 <h2>Notes</h2>
 <ul>
   <li>Plugins should write errors to stderr and exit with a non-zero status.</li>

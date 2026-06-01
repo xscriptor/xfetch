@@ -76,7 +76,7 @@ fn color_sweep(line: &str, offset: usize) -> String {
             continue;
         }
         let color = palette[(idx + offset) % palette.len()];
-        out.push_str(&format!("\u001b[{}m{}\u001b[0m", color, ch));
+        out.push_str(&format!("\u{001b}[{}m{}\u{001b}[0m", color, ch));
     }
 
     out
