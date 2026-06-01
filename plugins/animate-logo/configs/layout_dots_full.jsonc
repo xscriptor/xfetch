@@ -1,20 +1,17 @@
 {
-    "layout": "dots",
+    
+    "ascii": "~/.config/xfetch/logos/xfetch_logo.txt",
+    "logo_animation": {
+    "plugin": "animate-logo",
+    "fps": 12,
+    "duration_ms": 1200,
+    "loop": false
+  },
+    "layout": "pacman",
+    "header_icons": ["ᗧ", "ᗣ", "ᗣ", "ᗣ", "ᗣ", "●"],
+    "footer_text": "* X *",
     "modules": [
-        "os",
-        "kernel",
-        "uptime",
-        "packages",
-        "shell",
-        "terminal",
-        "wm",
-        "cpu",
-        "gpu",
-        "memory",
-        "disk",
-        "battery",
-        "local_ip",
-        "palette"
+        "os", "kernel", "uptime", "packages", "wm", "shell", "cpu", "gpu", "memory", "disk", "battery"
     ],
     "show_colors": true,
     "icons": {
@@ -22,31 +19,25 @@
         "kernel": "",
         "uptime": "󰔛",
         "packages": "",
-        "shell": "",
-        "terminal": "",
         "wm": "",
+        "shell": "",
         "cpu": "",
         "gpu": "󰍹",
         "memory": "",
         "disk": "󰋊",
-        "battery": "",
-        "local_ip": "󰩟",
-        "palette": "󰩟"
+        "battery": ""
     },
     "colors": {
-        "os": "Green",
-        "kernel": "Green",
-        "uptime": "Green",
-        "packages": "Blue",
-        "shell": "Blue",
-        "terminal": "Blue",
-        "wm": "Red",
-        "cpu": "Red",
-        "gpu": "Red",
-        "memory": "Yellow",
-        "disk": "Yellow",
-        "battery": "Yellow",
-        "local_ip": "Cyan",
-        "palette": "White"
+        "os": "White",
+        "kernel": "White",
+        "uptime": "White",
+        "packages": "White",
+        "wm": "White",
+        "shell": "White",
+        "cpu": "White",
+        "gpu": "White",
+        "memory": "White",
+        "disk": "White",
+        "battery": "Green"
     }
 }
