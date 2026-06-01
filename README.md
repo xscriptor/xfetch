@@ -7,6 +7,11 @@
 
 <p>A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.</p>
 
+<a href="https://imgur.com/iKGpg4h">
+<img src="https://i.imgur.com/ihNz93o.gif" width="900" alt="Demo" >
+</a>
+
+
 <!--Menu-->
 <div align="left">
   <h2>Menu</h2>
