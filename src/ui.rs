@@ -34,13 +34,14 @@ fn load_animation_frames(config: &LogoAnimationConfig) -> Option<Vec<Vec<String>
     if frames.is_empty() { None } else { Some(frames) }
 }
 
+const FRAME_SEPARATOR: &str = "\n===\n";
+
 fn split_ascii_frames(content: &str) -> Vec<Vec<String>> {
-    let sep = "\n===\n";
-    if !content.contains(sep) {
+    if !content.contains(FRAME_SEPARATOR) {
         return Vec::new();
     }
     content
-        .split(sep)
+        .split(FRAME_SEPARATOR)
         .map(|block| block.lines().map(|l| l.to_string()).collect())
         .filter(|frame: &Vec<String>| !frame.is_empty() && !frame.iter().all(|l| l.trim().is_empty()))
         .collect()

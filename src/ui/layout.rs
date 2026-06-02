@@ -2,13 +2,19 @@ use crate::config::Config;
 use super::nodes::RenderNode;
 use super::renders::{render_classic, render_classic_variants, render_side_block, render_tree, render_section};
 
+const DEFAULT_LAYOUT: &str = "default";
+const SIDEBLOCK_LAYOUT: &str = "side-block";
+const TREE_LAYOUT: &str = "tree";
+const SECTION_LAYOUT: &str = "section";
+const CLASSIC_VARIANTS: &[&str] = &["pacman", "box", "line", "dots", "bottom_line"];
+
 pub fn get_content_lines(nodes: &[RenderNode], config: &Config) -> Vec<String> {
-    let layout_type = config.layout.as_deref().unwrap_or("default");
+    let layout_type = config.layout.as_deref().unwrap_or(DEFAULT_LAYOUT);
     match layout_type {
-        "side-block" => render_side_block(nodes, config),
-        "tree" => render_tree(nodes, config),
-        "section" => render_section(nodes, config),
-        "pacman" | "box" | "line" | "dots" | "bottom_line" => render_classic_variants(nodes, config, layout_type),
+        SIDEBLOCK_LAYOUT => render_side_block(nodes, config),
+        TREE_LAYOUT => render_tree(nodes, config),
+        SECTION_LAYOUT => render_section(nodes, config),
+        _ if CLASSIC_VARIANTS.contains(&layout_type) => render_classic_variants(nodes, config, layout_type),
         _ => render_classic(nodes, config),
     }
 }

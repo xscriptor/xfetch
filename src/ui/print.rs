@@ -7,6 +7,10 @@ use crossterm::execute;
 use std::io::{stdout, Stdout};
 use std::time::{Duration, Instant};
 
+const LOGO_INFO_GAP: &str = "  ";
+const DEFAULT_LOGO_COLOR: Color = Color::Rgb { r: 128, g: 128, b: 128 };
+const MIN_FRAME_DELAY_MS: u64 = 1;
+
 pub fn print_output(
     ascii_lines: Vec<String>,
     image_printed: bool,
@@ -17,15 +21,12 @@ pub fn print_output(
 ) {
     let mut out = stdout();
 
-    // Determine max lines to print (logo vs content)
     let max_lines = std::cmp::max(ascii_lines.len(), content_lines.len());
-    let gap = "  ";
 
     for i in 0..max_lines {
-        // 1. Print Logo Part
         if image_printed {
             execute!(out, crossterm::cursor::MoveRight(ascii_width as u16)).unwrap();
-            execute!(out, Print(gap)).unwrap();
+            execute!(out, Print(LOGO_INFO_GAP)).unwrap();
         } else {
             let ascii_line = if i < ascii_lines.len() {
                 &ascii_lines[i]
@@ -33,7 +34,7 @@ pub fn print_output(
                 ""
             };
             print_logo_line(&mut out, ascii_line, ascii_width, config, force_plain_logo);
-            execute!(out, Print(gap)).unwrap();
+            execute!(out, Print(LOGO_INFO_GAP)).unwrap();
         }
 
         // 2. Print Info Part
@@ -58,7 +59,6 @@ pub fn print_animated_output(
     }
 
     let mut out = stdout();
-    let gap = "  ";
     let max_logo_width = max_frame_width(frames, ascii_width);
     let max_logo_lines = frames
         .iter()
@@ -85,14 +85,14 @@ pub fn print_animated_output(
             let _ = execute!(out, Clear(ClearType::CurrentLine));
             let ascii_line = frame.lines.get(i).map(|line| line.as_str()).unwrap_or("");
             print_logo_line(&mut out, ascii_line, max_logo_width, config, force_plain_logo);
-            let _ = execute!(out, Print(gap));
+            let _ = execute!(out, Print(LOGO_INFO_GAP));
             if i < content_lines.len() {
                 let _ = execute!(out, Print(&content_lines[i]));
             }
             let _ = execute!(out, Print("\n"));
         }
 
-        let delay = std::cmp::max(1, frame.delay_ms);
+        let delay = std::cmp::max(MIN_FRAME_DELAY_MS, frame.delay_ms);
         std::thread::sleep(Duration::from_millis(delay));
 
         if !loop_enabled {
@@ -132,7 +132,7 @@ fn print_logo_line(
     } else {
         execute!(
             out,
-            SetForegroundColor(Color::Rgb { r: 128, g: 128, b: 128 }),
+            SetForegroundColor(DEFAULT_LOGO_COLOR),
             Print(format!("{}{}", ascii_line, " ".repeat(padding))),
             ResetColor
         )

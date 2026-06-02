@@ -1,68 +1,15 @@
+mod cli;
 mod config;
 mod info;
 mod plugins;
 mod ui;
 
+use clap::Parser;
+use cli::{Cli, Commands, PluginCommands};
 use crate::config::{generate_config, load_config};
 use crate::info::Info;
 use crate::plugins::{install_plugin, list_plugins, remove_plugin};
 use crate::ui::draw;
-use clap::{Parser, Subcommand};
-
-#[derive(Parser, Debug)]
-#[command(
-    author,
-    version,
-    about,
-    long_about = None,
-    after_help = "Examples:\n  xfetch\n  xfetch --config ~/.config/xfetch/config.jsonc\n  xfetch --gen-config\n  xfetch plugin install ./plugins/animate-logo\n  xfetch plugin list\n  xfetch plugin remove animate-logo"
-)]
-struct Cli {
-    #[command(subcommand)]
-    command: Option<Commands>,
-
-    /// Path to config file
-    #[arg(short, long, global = true)]
-    config: Option<String>,
-
-    /// Generate a default config.jsonc (pacman layout) and exit
-    #[arg(long, global = true)]
-    gen_config: bool,
-}
-
-#[derive(Subcommand, Debug)]
-enum Commands {
-    /// Manage plugins
-    Plugin {
-        #[command(subcommand)]
-        action: PluginCommands,
-    },
-}
-
-#[derive(Subcommand, Debug)]
-enum PluginCommands {
-    /// Build and install a plugin
-    ///
-    /// Provide a local path (e.g. ./plugins/animate-logo) or just a plugin name.
-    /// If the plugin is not found locally, it will be fetched from a remote repository.
-    Install {
-        /// Name or local path of the plugin (e.g., animate-logo or ./plugins/animate-logo)
-        path: String,
-
-        /// Git repository URL to fetch the plugin from
-        ///
-        /// Defaults to https://github.com/xscriptor/xfetch.git
-        #[arg(long, short)]
-        repo: Option<String>,
-    },
-    /// List installed plugins
-    List,
-    /// Remove an installed plugin
-    Remove {
-        /// Name of the plugin to remove (e.g., animate-logo)
-        name: String,
-    },
-}
 
 fn main() {
     let cli = Cli::parse();
@@ -122,7 +69,6 @@ fn main() {
             }
         },
         None => {
-            // Normal fetch behavior
             let config = load_config(cli.config);
             let info = Info::new();
             draw(&info, &config);

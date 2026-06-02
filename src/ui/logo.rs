@@ -4,12 +4,10 @@ use crossterm::execute;
 use std::io::stdout;
 use super::x::{expand_path, get_default_ascii};
 
+const IMAGE_EXTENSIONS: [&str; 4] = [".png", ".jpg", ".jpeg", ".svg"];
 
 fn is_image_file(path: &str) -> bool {
-    path.ends_with(".png")
-        || path.ends_with(".jpg")
-        || path.ends_with(".jpeg")
-        || path.ends_with(".svg")
+    IMAGE_EXTENSIONS.iter().any(|ext| path.ends_with(ext))
 }
 
 pub fn get_logo_data(config: &Config) -> (Vec<String>, bool, usize) {
