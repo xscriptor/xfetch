@@ -9,7 +9,6 @@ pub use software::get_packages_info;
 pub use system::{get_datetime_info, get_host_name, get_kernel_info, get_os_info, get_uptime_info};
 
 const BYTES_PER_GIB: f64 = 1024.0 * 1024.0 * 1024.0;
-const FALLBACK_IP: &str = "127.0.0.1";
 
 fn unknown() -> String {
     "Unknown".to_string()
@@ -64,22 +63,9 @@ impl Info {
             desktop: software::get_desktop_info(),
             user: software::get_user_info(),
             datetime: get_datetime_info(),
-            local_ip: get_local_ip_info(&networks),
+            local_ip: system::get_local_ip_info(&networks),
         }
     }
-}
-
-fn get_local_ip_info(networks: &Networks) -> String {
-    for (_name, data) in networks {
-        for ip in data.ip_networks() {
-             if let std::net::IpAddr::V4(ipv4) = ip.addr {
-                 if !ipv4.is_loopback() {
-                     return ipv4.to_string();
-                 }
-             }
-        }
-    }
-    FALLBACK_IP.to_string()
 }
 
 #[cfg(test)]

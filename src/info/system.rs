@@ -1,4 +1,4 @@
-use sysinfo::System;
+use sysinfo::{Networks, System};
 use std::process::Command;
 
 const POWERSHELL_CMD: &str = "powershell";
@@ -10,7 +10,11 @@ pub fn get_os_info() -> String {
     let name = System::name().unwrap_or_else(super::unknown);
     let version = System::os_version().unwrap_or_default();
     let arch = std::env::consts::ARCH;
-    format!("{} {} {}", name, version, arch)
+    if version.is_empty() {
+        format!("{} {}", name, arch)
+    } else {
+        format!("{} {} {}", name, version, arch)
+    }
 }
 
 pub fn get_kernel_info() -> String {
@@ -25,7 +29,9 @@ pub fn get_uptime_info() -> String {
     let uptime = System::uptime();
     let hours = uptime / 3600;
     let mins = (uptime % 3600) / 60;
-    format!("{} hours, {} mins", hours, mins)
+    let hour_label = if hours == 1 { "hour" } else { "hours" };
+    let min_label = if mins == 1 { "min" } else { "mins" };
+    format!("{} {}, {} {}", hours, hour_label, mins, min_label)
 }
 
 pub fn get_datetime_info() -> String {
@@ -43,6 +49,19 @@ pub fn get_datetime_info() -> String {
         }
     }
     super::unknown()
+}
+
+pub fn get_local_ip_info(networks: &Networks) -> String {
+    for (_name, data) in networks {
+        for ip in data.ip_networks() {
+             if let std::net::IpAddr::V4(ipv4) = ip.addr {
+                 if !ipv4.is_loopback() {
+                     return ipv4.to_string();
+                 }
+             }
+        }
+    }
+    "127.0.0.1".to_string()
 }
 
 #[cfg(test)]
@@ -64,7 +83,11 @@ mod tests {
     #[test]
     fn test_get_uptime_info() {
         let uptime = get_uptime_info();
-        assert!(uptime.contains("hours") || uptime.contains("mins"));
+        assert!(
+            uptime.contains("hour") || uptime.contains("min"),
+            "uptime '{}' should contain hour or min",
+            uptime
+        );
     }
 
     #[test]
