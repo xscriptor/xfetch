@@ -16,14 +16,20 @@ const DEFAULT_TREE_ICON: &str = "";
 const TREE_LAST_PREFIX: &str = "└──";
 const TREE_CHILD_PREFIX: &str = "├──";
 const DEFAULT_FOOTER: &str = "X";
-const DEFAULT_ICON: &str = "●";
 
 pub fn render_classic(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     let mut lines = Vec::new();
     for node in nodes {
         match node {
-            RenderNode::Line { key, value, icon } => {
-                lines.push(format_line(key, value, icon, config));
+             RenderNode::Line { key, value, icon } => {
+                 if icon.is_empty() {
+                     lines.push(format!(
+                         "\x1b[{}m│\x1b[0m {}",
+                         SECTION_COLOR, value
+                     ));
+                 } else {
+                     lines.push(format_line(key, value, icon, config));
+                 }
             },
             RenderNode::Group { title, children } => {
                 lines.push(format!("-- {} --", title));
@@ -174,6 +180,12 @@ pub fn render_tree(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     lines
 }
 
+fn prefix_width(icon: &str, key: &str) -> usize {
+    let icon_w = console::measure_text_width(icon);
+    let key_w = console::measure_text_width(key);
+    1 + icon_w + 1 + key_w + 2
+}
+
 pub fn render_section(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     let mut lines = Vec::new();
     
@@ -186,21 +198,67 @@ pub fn render_section(nodes: &[RenderNode], config: &Config) -> Vec<String> {
                 );
                 lines.push(header);
                 
+                let indent = children
+                    .iter()
+                    .filter_map(|c| {
+                        if let RenderNode::Line { icon, key, .. } = c {
+                            if !icon.is_empty() {
+                                Some(prefix_width(icon, key))
+                            } else {
+                                None
+                            }
+                        } else {
+                            None
+                        }
+                    })
+                    .max()
+                    .unwrap_or(0);
+
                 for child in children {
                      if let RenderNode::Line { key, value, icon } = child {
-                         let _icon_display = if icon == DEFAULT_ICON { "└" } else { icon.as_str() };
-                         
-                         let key_color = get_color_code(key, config);
-                         lines.push(format!(
-                             "\x1b[{}m│\x1b[0m \x1b[{}m{} {}:\x1b[0m {}",
-                             SECTION_COLOR, key_color, icon, key, value
-                         ));
-                    }
+                          if icon.is_empty() && key.is_empty() {
+                              lines.push(format!(
+                                  "\x1b[{}m│\x1b[0m {}",
+                                  SECTION_COLOR, value
+                              ));
+                          } else if icon.is_empty() && key.starts_with("plugin:") {
+                              let color_code = get_color_code(key, config);
+                              lines.push(format!(
+                                  "\x1b[{}m│\x1b[0m \x1b[{}m{}\x1b[0m",
+                                  SECTION_COLOR, color_code, value
+                              ));
+                          } else if icon.is_empty() {
+                              let color_code = get_color_code(key, config);
+                              lines.push(format!(
+                                  "\x1b[{}m│\x1b[0m \x1b[{}m{:indent$}{}\x1b[0m",
+                                  SECTION_COLOR, color_code, "", value, indent = indent
+                              ));
+                          } else {
+                              let key_color = get_color_code(key, config);
+                              lines.push(format!(
+                                  "\x1b[{}m│\x1b[0m \x1b[{}m{} {}:\x1b[0m {}",
+                                  SECTION_COLOR, key_color, icon, key, value
+                              ));
+                          }
+                     }
                 }
                 lines.push("".to_string());
             },
              RenderNode::Line { key, value, icon } => {
-                 lines.push(format_line(key, value, icon, config));
+                 if icon.is_empty() && key.is_empty() {
+                     lines.push(format!(
+                         "\x1b[{}m│\x1b[0m {}",
+                         SECTION_COLOR, value
+                     ));
+                 } else if icon.is_empty() {
+                     let color_code = get_color_code(key, config);
+                     lines.push(format!(
+                         "\x1b[{}m│\x1b[0m \x1b[{}m{}\x1b[0m",
+                         SECTION_COLOR, color_code, value
+                     ));
+                 } else {
+                     lines.push(format_line(key, value, icon, config));
+                 }
             },
         }
     }

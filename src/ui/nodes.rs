@@ -29,6 +29,16 @@ pub fn prepare_render_tree(info: &Info, modules: &[ModuleConfig], config: &Confi
                     let val = format_palette(config);
                     let icon = config.icons.get(key).cloned().unwrap_or_else(|| DEFAULT_PALETTE_ICON.to_string());
                     nodes.push(RenderNode::Line { key: key.clone(), value: val, icon });
+                } else if key.starts_with("plugin:") {
+                    if let Some(lines) = info.plugin_info.get(key) {
+                        for line in lines {
+                            nodes.push(RenderNode::Line {
+                                key: key.clone(),
+                                value: line.trim().to_string(),
+                                icon: String::new(),
+                            });
+                        }
+                    }
                 } else {
                     let val = get_module_value(info, key);
                     if let Some(v) = val {
@@ -77,9 +87,6 @@ fn get_module_value(info: &Info, key: &str) -> Option<String> {
         PALETTE_KEY => None,
         HEADER_KEY => Some(format!("{}@{}", info.user, info.host_name)),
         SEP_KEY => Some(SEPARATOR.to_string()),
-        _ if key.starts_with("plugin:") => {
-            info.plugin_info.get(key).map(|lines| lines.join(" / "))
-        },
         _ => None,
     }
 }
