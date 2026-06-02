@@ -70,7 +70,7 @@ fn main() {
         },
         None => {
             let config = load_config(cli.config);
-            let info = Info::new();
+            let info = Info::with_config(&config);
             draw(&info, &config);
         }
     }

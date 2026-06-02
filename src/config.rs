@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use std::fs;
 use std::path::PathBuf;
 use json_comments::StripComments;
@@ -30,6 +31,7 @@ pub struct Config {
     pub footer_text: Option<String>,
     pub palette_style: Option<String>, // "dots", "squares", "lines", "triangles"
     pub logo_animation: Option<LogoAnimationConfig>,
+    pub info_plugins: Vec<InfoPluginConfig>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -49,6 +51,13 @@ pub struct LogoAnimationConfig {
     pub loop_enabled: Option<bool>,
     pub style: Option<String>,
     pub frames_path: Option<FramePaths>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+#[serde(default)]
+pub struct InfoPluginConfig {
+    pub plugin: String,
+    pub args: Option<Value>,
 }
 
 impl Default for Config {
@@ -99,6 +108,7 @@ impl Default for Config {
             footer_text: None,
             palette_style: None,
             logo_animation: None,
+            info_plugins: Vec::new(),
         }
     }
 }

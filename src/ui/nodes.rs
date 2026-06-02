@@ -77,6 +77,9 @@ fn get_module_value(info: &Info, key: &str) -> Option<String> {
         PALETTE_KEY => None,
         HEADER_KEY => Some(format!("{}@{}", info.user, info.host_name)),
         SEP_KEY => Some(SEPARATOR.to_string()),
+        _ if key.starts_with("plugin:") => {
+            info.plugin_info.get(key).map(|lines| lines.join(" / "))
+        },
         _ => None,
     }
 }
@@ -123,11 +126,10 @@ mod tests {
     use crate::config::Config;
     use crate::info::Info;
 
-    // As default or new.
     #[test]
     fn test_prepare_render_tree_empty() {
-        let info = Info::new();
         let config = Config::default();
+        let info = Info::with_config(&config);
         let modules = vec![];
         
         let nodes = prepare_render_tree(&info, &modules, &config);
@@ -136,8 +138,8 @@ mod tests {
 
     #[test]
     fn test_security_malicious_module_injection() {
-        let info = Info::new();
         let config = Config::default();
+        let info = Info::with_config(&config);
         
         // Cybersec: test malicious module injection
         let malicious_modules = vec![

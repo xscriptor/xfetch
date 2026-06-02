@@ -2,6 +2,9 @@ pub mod hardware;
 pub mod software;
 pub mod system;
 
+use crate::config::{Config, InfoPluginConfig};
+use crate::plugins::run_info_plugin;
+use std::collections::HashMap;
 use sysinfo::{Components, Disks, Networks, System};
 
 pub use hardware::get_gpu_info;
@@ -36,15 +39,18 @@ pub struct Info {
     pub user: String,
     pub datetime: String,
     pub local_ip: String,
+    pub plugin_info: HashMap<String, Vec<String>>,
 }
 
 impl Info {
-    pub fn new() -> Self {
+    pub fn with_config(config: &Config) -> Self {
         let mut sys = System::new_all();
         sys.refresh_all();
         let disks = Disks::new_with_refreshed_list();
         let networks = Networks::new_with_refreshed_list();
         let components = Components::new_with_refreshed_list();
+
+        let plugin_info = load_plugin_info(&config.info_plugins);
 
         Self {
             os: get_os_info(),
@@ -64,8 +70,25 @@ impl Info {
             user: software::get_user_info(),
             datetime: get_datetime_info(),
             local_ip: system::get_local_ip_info(&networks),
+            plugin_info,
         }
     }
+}
+
+fn load_plugin_info(plugins: &[InfoPluginConfig]) -> HashMap<String, Vec<String>> {
+    let mut result = HashMap::new();
+    for plugin_cfg in plugins {
+        match run_info_plugin(plugin_cfg) {
+            Ok(lines) => {
+                let key = format!("plugin:{}", plugin_cfg.plugin);
+                result.insert(key, lines);
+            }
+            Err(err) => {
+                eprintln!("Plugin '{}' error: {}", plugin_cfg.plugin, err);
+            }
+        }
+    }
+    result
 }
 
 #[cfg(test)]
