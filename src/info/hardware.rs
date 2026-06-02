@@ -5,14 +5,17 @@ const UNKNOWN_GPU: &str = "Unknown GPU";
 const ZERO_SWAP: &str = "0 B / 0 B (0%)";
 const NA: &str = "N/A";
 const BATT_DIR: &str = "/sys/class/power_supply";
-const BATT_PREFIX: &str = "BAT";
 const BATT_CAPACITY: &str = "capacity";
 const BATT_STATUS: &str = "status";
+const BATT_PREFIXES: [&str; 6] = ["BAT", "bat", "hidpp_battery", "ucsi_battery", "C22C", "ps-battery"];
 
 const LSPCI_CMD: &str = "lspci";
 const WMIC_CMD: &str = "wmic";
 const SYSTEM_PROFILER_CMD: &str = "system_profiler";
 const PMSET_CMD: &str = "pmset";
+const POWERSHELL_CMD: &str = "powershell";
+const GPU_PS_SCRIPT: &str = "Get-CimInstance Win32_VideoController | Select-Object -ExpandProperty Name";
+const BATT_PS_SCRIPT: &str = "Get-CimInstance Win32_Battery | Select-Object EstimatedChargeRemaining, BatteryStatus";
 
 const GPU_CLASS_VGA: &str = "VGA";
 const GPU_CLASS_3D: &str = "3D";
@@ -45,10 +48,15 @@ pub fn get_gpu_info() -> Vec<String> {
             }
         }
     } else if cfg!(target_os = "windows") {
-        if let Ok(output) = Command::new(WMIC_CMD)
+        let gpu_output = Command::new(WMIC_CMD)
             .args(["path", "win32_videocontroller", "get", "name"])
             .output()
-        {
+            .or_else(|_| {
+                Command::new(POWERSHELL_CMD)
+                    .args(["-Command", GPU_PS_SCRIPT])
+                    .output()
+            });
+        if let Ok(output) = gpu_output {
             let out = String::from_utf8_lossy(&output.stdout);
             for line in out.lines().skip(1) {
                 let trimmed = line.trim();
@@ -65,7 +73,7 @@ pub fn get_gpu_info() -> Vec<String> {
             let out = String::from_utf8_lossy(&output.stdout);
             for line in out.lines() {
                 if line.trim().starts_with(CHIPSET_MODEL) {
-                    gpus.push(line.trim().replace(CHIPSET_MODEL, ""));
+                    gpus.push(line.trim().replace(CHIPSET_MODEL, "").trim().to_string());
                 }
             }
         }
@@ -134,6 +142,10 @@ fn get_battery_info_macos() -> Option<String> {
     Some(format!("{} [{}]", pct, status))
 }
 
+fn is_battery_dir(name: &str) -> bool {
+    BATT_PREFIXES.iter().any(|p| name.starts_with(p))
+}
+
 fn get_battery_info_linux() -> Option<String> {
     let batt_dir = std::path::Path::new(BATT_DIR);
     let entries = std::fs::read_dir(batt_dir).ok()?;
@@ -143,7 +155,7 @@ fn get_battery_info_linux() -> Option<String> {
     for entry in entries.flatten() {
         let name = entry.file_name();
         let name = name.to_string_lossy();
-        if !name.starts_with(BATT_PREFIX) {
+        if !is_battery_dir(&name) {
             continue;
         }
         let base = entry.path();
@@ -181,6 +193,11 @@ fn get_battery_info_windows() -> Option<String> {
             "EstimatedChargeRemaining,BatteryStatus",
         ])
         .output()
+        .or_else(|_| {
+            Command::new(POWERSHELL_CMD)
+                .args(["-Command", BATT_PS_SCRIPT])
+                .output()
+        })
         .ok()?;
     let out = String::from_utf8_lossy(&output.stdout);
     for line in out.lines().skip(1) {

@@ -52,36 +52,70 @@ pub fn get_terminal_info() -> String {
     super::unknown()
 }
 
-pub fn get_packages_info() -> String {
-    if cfg!(target_os = "linux") {
-        if let Ok(output) = Command::new(PACMAN_CMD).arg("-Qq").output() {
+fn count_packages_linux() -> Option<String> {
+    let checks: &[(&str, &[&str])] = &[
+        (PACMAN_CMD, &["-Qq"]),
+        (DPKG_CMD, &["--get-selections"]),
+        ("rpm", &["-qa"]),
+        ("flatpak", &["list", "--app"]),
+        ("snap", &["list"]),
+    ];
+    for (cmd, args) in checks {
+        if let Ok(output) = Command::new(cmd).args(*args).output() {
             if output.status.success() {
                 let count = String::from_utf8_lossy(&output.stdout).lines().count();
-                return format!("{} (pacman)", count);
+                return Some(format!("{} ({})", count, cmd));
             }
         }
-        if let Ok(output) = Command::new(DPKG_CMD).arg("--get-selections").output() {
+    }
+    None
+}
+
+fn count_packages_windows() -> Option<String> {
+    let checks: &[(&str, &[&str])] = &[
+        (SCOOP_CMD, &["list"]),
+    ];
+    for (cmd, args) in checks {
+        if let Ok(output) = Command::new(cmd).args(*args).output() {
             if output.status.success() {
                 let count = String::from_utf8_lossy(&output.stdout).lines().count();
-                return format!("{} (dpkg)", count);
+                let count = count.saturating_sub(4);
+                return Some(format!("{} ({})", count, cmd));
             }
+        }
+    }
+    None
+}
+
+fn count_packages_macos() -> Option<String> {
+    let checks: &[(&str, &[&str])] = &[
+        (BREW_CMD, &["list", "--formula"]),
+    ];
+    for (cmd, args) in checks {
+        if let Ok(output) = Command::new(cmd).args(*args).output() {
+            if output.status.success() {
+                let count = String::from_utf8_lossy(&output.stdout).lines().count();
+                return Some(format!("{} ({})", count, cmd));
+            }
+        }
+    }
+    None
+}
+
+pub fn get_packages_info() -> String {
+    if cfg!(target_os = "linux") {
+        if let Some(info) = count_packages_linux() {
+            return info;
         }
     }
     if cfg!(target_os = "windows") {
-        if let Ok(output) = Command::new(SCOOP_CMD).arg("list").output() {
-            if output.status.success() {
-                let count =
-                    String::from_utf8_lossy(&output.stdout).lines().count().saturating_sub(4);
-                return format!("{} (scoop)", count);
-            }
+        if let Some(info) = count_packages_windows() {
+            return info;
         }
     }
     if cfg!(target_os = "macos") {
-        if let Ok(output) = Command::new(BREW_CMD).args(["list", "--formula"]).output() {
-            if output.status.success() {
-                let count = String::from_utf8_lossy(&output.stdout).lines().count();
-                return format!("{} (brew)", count);
-            }
+        if let Some(info) = count_packages_macos() {
+            return info;
         }
     }
     super::unknown()
