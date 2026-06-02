@@ -1,6 +1,7 @@
 use crate::config::Config;
 use crate::plugins::AnimationFrame;
 use crossterm::cursor::{Hide, MoveUp, Show};
+use crossterm::terminal::size;
 use crossterm::style::{Color, Print, ResetColor, SetForegroundColor};
 use crossterm::terminal::{Clear, ClearType};
 use crossterm::execute;
@@ -72,17 +73,33 @@ pub fn print_animated_output(
     let mut frame_index = 0;
     let mut first_frame = true;
 
+    let max_content_width = content_lines
+        .iter()
+        .map(|l| visible_width(l))
+        .max()
+        .unwrap_or(0);
+    let line_physical_width = max_logo_width + LOGO_INFO_GAP.len() + max_content_width;
+    let term_width = size().map(|(w, _)| w as usize).unwrap_or(80);
+    let wraps = (line_physical_width + term_width - 1) / term_width;
+    let physical_lines = max_lines * std::cmp::max(1, wraps);
+    let scroll_margin = physical_lines + 4;
+
     let _ = execute!(out, Hide);
+
+    for _ in 0..scroll_margin {
+        let _ = execute!(out, Print("\n"));
+    }
+    let _ = execute!(out, MoveUp(scroll_margin as u16));
 
     loop {
         let frame = &frames[frame_index];
 
         if !first_frame {
-            let _ = execute!(out, MoveUp(max_lines as u16));
+            let _ = execute!(out, MoveUp(scroll_margin as u16));
+            let _ = execute!(out, Clear(ClearType::FromCursorDown));
         }
 
         for i in 0..max_lines {
-            let _ = execute!(out, Clear(ClearType::CurrentLine));
             let ascii_line = frame.lines.get(i).map(|line| line.as_str()).unwrap_or("");
             print_logo_line(&mut out, ascii_line, max_logo_width, config, force_plain_logo);
             let _ = execute!(out, Print(LOGO_INFO_GAP));
