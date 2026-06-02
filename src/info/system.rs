@@ -1,4 +1,4 @@
-use sysinfo::System;
+use sysinfo::{Networks, System};
 use std::process::Command;
 
 const POWERSHELL_CMD: &str = "powershell";
@@ -49,6 +49,19 @@ pub fn get_datetime_info() -> String {
         }
     }
     super::unknown()
+}
+
+pub fn get_local_ip_info(networks: &Networks) -> String {
+    for (_name, data) in networks {
+        for ip in data.ip_networks() {
+             if let std::net::IpAddr::V4(ipv4) = ip.addr {
+                 if !ipv4.is_loopback() {
+                     return ipv4.to_string();
+                 }
+             }
+        }
+    }
+    "127.0.0.1".to_string()
 }
 
 #[cfg(test)]

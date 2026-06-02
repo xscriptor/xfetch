@@ -33,55 +33,75 @@ pub fn get_cpu_info(sys: &System) -> String {
     format!("{} ({}) @ {:.2} GHz", brand, cores, freq as f64 / 1000.0)
 }
 
-pub fn get_gpu_info() -> Vec<String> {
+fn get_gpu_info_linux() -> Vec<String> {
     let mut gpus = Vec::new();
-    if cfg!(target_os = "linux") {
-        if let Ok(output) = Command::new(LSPCI_CMD).arg("-mm").output() {
-            let out = String::from_utf8_lossy(&output.stdout);
-            for line in out.lines() {
-                if line.contains(GPU_CLASS_VGA) || line.contains(GPU_CLASS_3D) || line.contains(GPU_CLASS_DISPLAY) {
-                    let parts: Vec<&str> = line.split('"').collect();
-                    if parts.len() > 5 {
-                        gpus.push(parts[5].to_string());
-                    }
+    if let Ok(output) = Command::new(LSPCI_CMD).arg("-mm").output() {
+        let out = String::from_utf8_lossy(&output.stdout);
+        for line in out.lines() {
+            if line.contains(GPU_CLASS_VGA) || line.contains(GPU_CLASS_3D) || line.contains(GPU_CLASS_DISPLAY) {
+                let parts: Vec<&str> = line.split('"').collect();
+                if parts.len() > 5 {
+                    gpus.push(parts[5].to_string());
                 }
             }
         }
-    } else if cfg!(target_os = "windows") {
-        let gpu_output = Command::new(WMIC_CMD)
-            .args(["path", "win32_videocontroller", "get", "name"])
-            .output()
-            .or_else(|_| {
-                Command::new(POWERSHELL_CMD)
-                    .args(["-Command", GPU_PS_SCRIPT])
-                    .output()
-            });
-        if let Ok(output) = gpu_output {
-            let out = String::from_utf8_lossy(&output.stdout);
-            for line in out.lines().skip(1) {
-                let trimmed = line.trim();
-                if !trimmed.is_empty() {
-                    gpus.push(trimmed.to_string());
-                }
-            }
-        }
-    } else if cfg!(target_os = "macos") {
-        if let Ok(output) = Command::new(SYSTEM_PROFILER_CMD)
-            .arg("SPDisplaysDataType")
-            .output()
-        {
-            let out = String::from_utf8_lossy(&output.stdout);
-            for line in out.lines() {
-                if line.trim().starts_with(CHIPSET_MODEL) {
-                    gpus.push(line.trim().replace(CHIPSET_MODEL, "").trim().to_string());
-                }
-            }
-        }
-    }
-    if gpus.is_empty() {
-        gpus.push(UNKNOWN_GPU.to_string());
     }
     gpus
+}
+
+fn get_gpu_info_windows() -> Vec<String> {
+    let mut gpus = Vec::new();
+    let gpu_output = Command::new(WMIC_CMD)
+        .args(["path", "win32_videocontroller", "get", "name"])
+        .output()
+        .or_else(|_| {
+            Command::new(POWERSHELL_CMD)
+                .args(["-Command", GPU_PS_SCRIPT])
+                .output()
+        });
+    if let Ok(output) = gpu_output {
+        let out = String::from_utf8_lossy(&output.stdout);
+        for line in out.lines().skip(1) {
+            let trimmed = line.trim();
+            if !trimmed.is_empty() {
+                gpus.push(trimmed.to_string());
+            }
+        }
+    }
+    gpus
+}
+
+fn get_gpu_info_macos() -> Vec<String> {
+    let mut gpus = Vec::new();
+    if let Ok(output) = Command::new(SYSTEM_PROFILER_CMD)
+        .arg("SPDisplaysDataType")
+        .output()
+    {
+        let out = String::from_utf8_lossy(&output.stdout);
+        for line in out.lines() {
+            if line.trim().starts_with(CHIPSET_MODEL) {
+                gpus.push(line.trim().replace(CHIPSET_MODEL, "").trim().to_string());
+            }
+        }
+    }
+    gpus
+}
+
+pub fn get_gpu_info() -> Vec<String> {
+    let gpus: Vec<String> = if cfg!(target_os = "linux") {
+        get_gpu_info_linux()
+    } else if cfg!(target_os = "windows") {
+        get_gpu_info_windows()
+    } else if cfg!(target_os = "macos") {
+        get_gpu_info_macos()
+    } else {
+        Vec::new()
+    };
+    if gpus.is_empty() {
+        vec![UNKNOWN_GPU.to_string()]
+    } else {
+        gpus
+    }
 }
 
 pub fn get_memory_info(sys: &System) -> String {
