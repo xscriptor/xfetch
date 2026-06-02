@@ -192,7 +192,22 @@ fn get_battery_info(_components: &Components) -> String {
             return format!("{}% [{}]", cap.trim(), status.trim());
         }
     }
-    "100% [AC Connected]".to_string()
+    if cfg!(target_os = "macos") {
+        if let Ok(output) = Command::new("pmset").args(["-g", "batt"]).output() {
+            let out = String::from_utf8_lossy(&output.stdout);
+            if let Some(line) = out.lines().nth(1) {
+                let parts: Vec<&str> = line.split_whitespace().collect();
+                if let Some(pct) = parts.iter().find(|p| p.ends_with('%')) {
+                    let status = if line.contains("discharging") { "Discharging" }
+                        else if line.contains("charging") { "Charging" }
+                        else if line.contains("charged") { "Charged" }
+                        else { "Unknown" };
+                    return format!("{} [{}]", pct, status);
+                }
+            }
+        }
+    }
+    "N/A".to_string()
 }
 
 fn get_uptime_info() -> String {
