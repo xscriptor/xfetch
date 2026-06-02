@@ -2,9 +2,24 @@ use crate::config::Config;
 use super::nodes::RenderNode;
 use console::strip_ansi_codes;
 
+const BOX_PADDING: usize = 2;
+const BORDER_COLOR: &str = "38;5;2";
+const SECTION_COLOR: &str = "38;5;240";
+const PACMAN_GREEN: &str = "32";
+const PACMAN_COLORS: [&str; 5] = ["33", "31", "35", "36", "33"];
+const PACMAN_WHITE: &str = "37";
+const LINE_SEPARATOR: &str = "──────────────────────────────";
+const DOTS_SEPARATOR: &str = "..............................";
+const SEPARATOR_COLOR: &str = "90";
+const BOTTOM_LINE_COLOR: &str = "37";
+const DEFAULT_TREE_ICON: &str = "";
+const TREE_LAST_PREFIX: &str = "└──";
+const TREE_CHILD_PREFIX: &str = "├──";
+const DEFAULT_FOOTER: &str = "X";
+const DEFAULT_ICON: &str = "●";
+
 pub fn render_classic(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     let mut lines = Vec::new();
-    // Flatten
     for node in nodes {
         match node {
             RenderNode::Line { key, value, icon } => {
@@ -34,7 +49,7 @@ pub fn render_classic_variants(nodes: &[RenderNode], config: &Config, variant: &
                 strip_ansi_codes(&content).chars().count()
             }).max().unwrap_or(0);
             
-            let border_len = max_len + 2; // +2 for padding space
+            let border_len = max_len + BOX_PADDING;
             lines.push(format!("╭{}╮", "─".repeat(border_len)));
             
             for (key, val, icon) in flat_items {
@@ -46,41 +61,31 @@ pub fn render_classic_variants(nodes: &[RenderNode], config: &Config, variant: &
             lines.push(format!("╰{}╯", "─".repeat(border_len)));
         },
         "pacman" => {
-             // Header
             let icons = config.header_icons.as_ref().map(|v| v.clone()).unwrap_or_default();
-            let mut header = String::from("\x1b[32m╭─ \x1b[0m");
+            let mut header = format!("\x1b[{}m╭─ \x1b[0m", PACMAN_GREEN);
             for (idx, icon) in icons.iter().enumerate() {
-                let color = match idx % 5 {
-                     0 => "33", // Yellow
-                     1 => "31", // Red
-                     2 => "35", // Magenta
-                     3 => "36", // Cyan
-                     4 => "33", // Orange-ish
-                     _ => "37",
-                };
+                let color = PACMAN_COLORS[idx % 5];
                 header.push_str(&format!("\x1b[{}m{} \x1b[0m", color, icon));
             }
-            header.push_str("\x1b[32m────────────────╮\x1b[0m");
+            header.push_str(&format!("\x1b[{}m────────────────╮\x1b[0m", PACMAN_GREEN));
             lines.push(header);
             
-            // Content
             for (key, val, icon) in flat_items {
                  lines.push(format_line(&key, &val, &icon, config));
             }
             
-            // Footer
-            let footer_text = config.footer_text.as_deref().unwrap_or("X");
+            let footer_text = config.footer_text.as_deref().unwrap_or(DEFAULT_FOOTER);
              lines.push(format!(
-                "\x1b[32m╰────────── \x1b[37m{}\x1b[32m ──────────╯\x1b[0m", 
-                footer_text
+                "\x1b[{}m╰────────── \x1b[{}m{}\x1b[{}m ──────────╯\x1b[0m",
+                PACMAN_GREEN, PACMAN_WHITE, footer_text, PACMAN_GREEN
             ));
         },
         "line" | "dots" => {
             for (idx, (key, val, icon)) in flat_items.iter().enumerate() {
                 lines.push(format_line(key, val, icon, config));
                 if (idx + 1) % 3 == 0 && idx != flat_items.len() - 1 {
-                     let sep = if variant == "line" { "──────────────────────────────" } else { ".............................." };
-                     lines.push(format!("\x1b[90m{}\x1b[0m", sep));
+                     let sep = if variant == "line" { LINE_SEPARATOR } else { DOTS_SEPARATOR };
+                     lines.push(format!("\x1b[{}m{}\x1b[0m", SEPARATOR_COLOR, sep));
                 }
             }
         },
@@ -88,97 +93,80 @@ pub fn render_classic_variants(nodes: &[RenderNode], config: &Config, variant: &
              for (key, val, icon) in flat_items {
                 lines.push(format_line(&key, &val, &icon, config));
             }
-            lines.push("\x1b[37m──────────────────────────────\x1b[0m".to_string());
+            lines.push(format!("\x1b[{}m{}\x1b[0m", BOTTOM_LINE_COLOR, LINE_SEPARATOR));
         },
         _ => return render_classic(nodes, config),
     }
     lines
 }
 
-// Image 1: Side Block
 pub fn render_side_block(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     let mut lines = Vec::new();
     let flat_items = flatten_nodes(nodes);
     
-    // Calculate max key length (use icon as label)
     let max_key_len = flat_items.iter().map(|(_, _, icon)| strip_ansi_codes(icon).chars().count()).max().unwrap_or(0);
-    // Calculate max val length
     let max_val_len = flat_items.iter().map(|(_, v, _)| strip_ansi_codes(v).chars().count()).max().unwrap_or(0);
 
-    let left_width = max_key_len + 2;
-    let right_width = max_val_len + 2;
+    let left_width = max_key_len + BOX_PADDING;
+    let right_width = max_val_len + BOX_PADDING;
 
-    // Top borders
-    // ╭───╮ ╭───╮
     let top = format!(
-        "\x1b[38;5;2m╭{}╮\x1b[0m \x1b[38;5;2m╭{}╮\x1b[0m", 
-        "─".repeat(left_width), 
-        "─".repeat(right_width)
+        "\x1b[{}m╭{}╮\x1b[0m \x1b[{}m╭{}╮\x1b[0m",
+        BORDER_COLOR, "─".repeat(left_width),
+        BORDER_COLOR, "─".repeat(right_width)
     );
     lines.push(top);
 
     for (key, val, icon) in flat_items {
-        // Color key based on config or rainbow
         let color_code = get_color_code(&key, config);
-        // Use icon as label text!
         let key_str = format!("\x1b[{}m{:<width$}\x1b[0m", color_code, icon, width = max_key_len);
         
         let val_stripped_len = strip_ansi_codes(&val).chars().count();
         let padding = max_val_len - val_stripped_len;
 
         let line = format!(
-            "\x1b[38;5;2m│\x1b[0m {} \x1b[38;5;2m│\x1b[0m \x1b[38;5;2m│\x1b[0m {}{} \x1b[38;5;2m│\x1b[0m",
-            key_str,
-            val,
-            " ".repeat(padding)
+            "\x1b[{}m│\x1b[0m {} \x1b[{}m│\x1b[0m \x1b[{}m│\x1b[0m {}{} \x1b[{}m│\x1b[0m",
+            BORDER_COLOR, key_str,
+            BORDER_COLOR, BORDER_COLOR, val, " ".repeat(padding), BORDER_COLOR
         );
         lines.push(line);
     }
 
-    // Bottom borders
     let bottom = format!(
-        "\x1b[38;5;2m╰{}╯\x1b[0m \x1b[38;5;2m╰{}╯\x1b[0m", 
-        "─".repeat(left_width), 
-        "─".repeat(right_width)
+        "\x1b[{}m╰{}╯\x1b[0m \x1b[{}m╰{}╯\x1b[0m",
+        BORDER_COLOR, "─".repeat(left_width),
+        BORDER_COLOR, "─".repeat(right_width)
     );
     lines.push(bottom);
 
     lines
 }
 
-// Image 2: Tree
 pub fn render_tree(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     let mut lines = Vec::new();
     
     for node in nodes {
         match node {
             RenderNode::Group { title, children } => {
-                // Root: [Icon] Title
-                // Find icon for title if exists, or use default
-                let icon = config.icons.get(title.to_lowercase().as_str()).map(|s| s.as_str()).unwrap_or(""); // Default PC icon
+                let icon = config.icons.get(title.to_lowercase().as_str()).map(|s| s.as_str()).unwrap_or(DEFAULT_TREE_ICON);
                 let color_code = get_color_code(&title.to_lowercase(), config);
                 
                 lines.push(format!("\x1b[{}m{} {}\x1b[0m", color_code, icon, title));
                 
                 for (idx, child) in children.iter().enumerate() {
                     let is_last = idx == children.len() - 1;
-                    let prefix = if is_last { "└──" } else { "├──" };
+                    let prefix = if is_last { TREE_LAST_PREFIX } else { TREE_CHILD_PREFIX };
                     
                     if let RenderNode::Line { key, value, icon: _ } = child {
-                        // Tree style: ├── Key Value
                          let key_color = get_color_code(key, config);
                          lines.push(format!(
-                             "\x1b[38;5;240m{}\x1b[0m \x1b[{}m{}\x1b[0m {}", 
-                             prefix, 
-                             key_color, 
-                             key, 
-                             value
+                             "\x1b[{}m{}\x1b[0m \x1b[{}m{}\x1b[0m {}",
+                             SECTION_COLOR, prefix, key_color, key, value
                          ));
                     }
                 }
             },
             RenderNode::Line { key, value, icon } => {
-                // Top level item
                  lines.push(format_line(key, value, icon, config));
             },
         }
@@ -186,37 +174,30 @@ pub fn render_tree(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     lines
 }
 
-// Image 3: Section
 pub fn render_section(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     let mut lines = Vec::new();
     
     for node in nodes {
         match node {
             RenderNode::Group { title, children } => {
-                // ┌─── Title ───┐ (Simplified)
-                // ---- Title ----
-                let header = format!("\x1b[38;5;240m──────\x1b[0m \x1b[1m{}\x1b[0m \x1b[38;5;240m──────\x1b[0m", title);
+                let header = format!(
+                    "\x1b[{}m──────\x1b[0m \x1b[1m{}\x1b[0m \x1b[{}m──────\x1b[0m",
+                    SECTION_COLOR, title, SECTION_COLOR
+                );
                 lines.push(header);
                 
                 for child in children {
                      if let RenderNode::Line { key, value, icon } = child {
-                         // Uses a special L-shape or just pipe?
-                         // Image 3 uses: L: ...
-                         // Image 4 uses tree style: ├──
-                         // Let's use tree style
-                         let _icon_display = if icon == "●" { "└" } else { icon }; // Use icon if specific, else tree
+                         let _icon_display = if icon == DEFAULT_ICON { "└" } else { icon.as_str() };
                          
                          let key_color = get_color_code(key, config);
                          lines.push(format!(
-                             "\x1b[38;5;240m│\x1b[0m \x1b[{}m{} {}:\x1b[0m {}", 
-                             key_color,
-                             icon,
-                             key, 
-                             value
+                             "\x1b[{}m│\x1b[0m \x1b[{}m{} {}:\x1b[0m {}",
+                             SECTION_COLOR, key_color, icon, key, value
                          ));
                     }
                 }
-                lines.push("".to_string()); // Empty line
+                lines.push("".to_string());
             },
              RenderNode::Line { key, value, icon } => {
                  lines.push(format_line(key, value, icon, config));
@@ -226,7 +207,6 @@ pub fn render_section(nodes: &[RenderNode], config: &Config) -> Vec<String> {
     lines
 }
 
-// Helper to flatten nodes for classic layouts
 pub fn flatten_nodes(nodes: &[RenderNode]) -> Vec<(String, String, String)> {
     let mut items = Vec::new();
     for node in nodes {
@@ -243,17 +223,11 @@ pub fn flatten_nodes(nodes: &[RenderNode]) -> Vec<(String, String, String)> {
 
 pub fn format_line(key: &str, value: &str, icon: &str, config: &Config) -> String {
     let color_code = get_color_code(key, config);
-    format!(
-        "\x1b[{}m{} \x1b[0m{}", 
-        color_code, 
-        icon, 
-        value
-    )
+    format!("\x1b[{}m{} \x1b[0m{}", color_code, icon, value)
 }
 
 pub fn format_line_content(key: &str, value: &str, icon: &str, config: &Config) -> String {
-    let color_code = get_color_code(key, config);
-    format!("\x1b[{}m{} \x1b[0m{}", color_code, icon, value)
+    format_line(key, value, icon, config)
 }
 
 pub fn get_color_code(key: &str, config: &Config) -> &'static str {

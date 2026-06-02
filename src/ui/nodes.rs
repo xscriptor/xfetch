@@ -1,6 +1,19 @@
 use crate::config::{Config, ModuleConfig};
 use crate::info::Info;
 
+const PALETTE_KEY: &str = "palette";
+const HEADER_KEY: &str = "header";
+const SEP_KEY: &str = "sep";
+const DEFAULT_PALETTE_ICON: &str = "🎨";
+pub const DEFAULT_MODULE_ICON: &str = "●";
+const SEPARATOR: &str = "---";
+const UNKNOWN_FALLBACK: &str = "Unknown";
+const SQUARES_STYLE: &str = "squares";
+const CIRCLES_STYLE: &str = "circles";
+const TRIANGLES_STYLE: &str = "triangles";
+const LINES_STYLE: &str = "lines";
+const ANSI_COLORS: [u8; 8] = [0, 1, 2, 3, 4, 5, 6, 7];
+
 #[derive(Debug)]
 pub enum RenderNode {
     Line { key: String, value: String, icon: String },
@@ -12,15 +25,14 @@ pub fn prepare_render_tree(info: &Info, modules: &[ModuleConfig], config: &Confi
     for module in modules {
         match module {
             ModuleConfig::Simple(key) => {
-                if key == "palette" {
+                if key == PALETTE_KEY {
                     let val = format_palette(config);
-                    // Icon for palette is optional, can be "Colors" or empty string if user wants no icon
-                    let icon = config.icons.get(key).cloned().unwrap_or("🎨".to_string());
+                    let icon = config.icons.get(key).cloned().unwrap_or_else(|| DEFAULT_PALETTE_ICON.to_string());
                     nodes.push(RenderNode::Line { key: key.clone(), value: val, icon });
                 } else {
                     let val = get_module_value(info, key);
                     if let Some(v) = val {
-                        let icon = config.icons.get(key).cloned().unwrap_or("●".to_string());
+                        let icon = config.icons.get(key).cloned().unwrap_or_else(|| DEFAULT_MODULE_ICON.to_string());
                         nodes.push(RenderNode::Line { key: key.clone(), value: v, icon });
                     }
                 }
@@ -47,14 +59,14 @@ fn get_module_value(info: &Info, key: &str) -> Option<String> {
         "shell" => Some(info.shell.clone()),
         "cpu" => Some(info.cpu.clone()),
         "gpu" => {
-            if info.gpu.is_empty() { Some("Unknown".to_string()) }
+            if info.gpu.is_empty() { Some(UNKNOWN_FALLBACK.to_string()) }
             else { Some(info.gpu.join(" / ")) }
         },
         "memory" => Some(info.memory.clone()),
         "swap" => Some(info.swap.clone()),
         "disk" => {
-             if info.disks.is_empty() { Some("Unknown".to_string()) }
-             else { Some(info.disks[0].clone()) } // Simplified
+             if info.disks.is_empty() { Some(UNKNOWN_FALLBACK.to_string()) }
+             else { Some(info.disks[0].clone()) }
         },
         "battery" => Some(info.battery.clone()),
         "uptime" => Some(info.uptime.clone()),
@@ -62,43 +74,40 @@ fn get_module_value(info: &Info, key: &str) -> Option<String> {
         "user" => Some(info.user.clone()),
         "datetime" => Some(info.datetime.clone()),
         "local_ip" => Some(info.local_ip.clone()),
-        "palette" => None, // Handled in prepare_render_tree
-        "header" => Some(format!("{}@{}", info.user, info.host_name)), // Custom module for header
-        "sep" => Some("---".to_string()),
+        PALETTE_KEY => None,
+        HEADER_KEY => Some(format!("{}@{}", info.user, info.host_name)),
+        SEP_KEY => Some(SEPARATOR.to_string()),
         _ => None,
     }
 }
 
 fn format_palette(config: &Config) -> String {
-    let style = config.palette_style.as_deref().unwrap_or("squares");
+    let style = config.palette_style.as_deref().unwrap_or(SQUARES_STYLE);
     let mut s = String::new();
-    
-    // ANSI color codes (0-7 correspond to 30-37 fg, 40-47 bg)
-    let colors = [0, 1, 2, 3, 4, 5, 6, 7];
-    
+
     match style {
-        "squares" => {
-            for c in colors {
+        SQUARES_STYLE => {
+            for c in ANSI_COLORS {
                 s.push_str(&format!("\x1b[{}m  \x1b[0m ", c + 40));
             }
         },
-        "circles" => {
-            for c in colors {
+        CIRCLES_STYLE => {
+            for c in ANSI_COLORS {
                 s.push_str(&format!("\x1b[{}m●\x1b[0m ", c + 30));
             }
         },
-        "triangles" => {
-            for c in colors {
+        TRIANGLES_STYLE => {
+            for c in ANSI_COLORS {
                 s.push_str(&format!("\x1b[{}m▲\x1b[0m ", c + 30));
             }
         },
-        "lines" => {
-            for c in colors {
+        LINES_STYLE => {
+            for c in ANSI_COLORS {
                 s.push_str(&format!("\x1b[{}m███\x1b[0m", c + 30));
             }
         },
         _ => {
-             for c in colors {
+             for c in ANSI_COLORS {
                 s.push_str(&format!("\x1b[{}m  \x1b[0m ", c + 40));
             }
         }
