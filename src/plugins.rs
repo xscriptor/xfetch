@@ -6,6 +6,7 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::io::Write;
 
+const PLUGIN_PREFIX: &str = "xfetch-plugin-";
 const DEFAULT_PLUGIN_REPO: &str = "https://github.com/xscriptor/xfetch.git";
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -174,7 +175,7 @@ fn build_and_install_plugin(plugin_dir: &Path, name: &str) -> Result<(), String>
 }
 
 fn install_remote_plugin(name: &str, repo_url: &str) -> Result<(), String> {
-    let temp_dir = env::temp_dir().join(format!("xfetch-plugin-{}", name));
+    let temp_dir = env::temp_dir().join(format!("{}{}", PLUGIN_PREFIX, name));
     let plugin_path = temp_dir.join("plugins").join(name);
 
     if temp_dir.exists() {
@@ -258,11 +259,7 @@ pub fn list_plugins() -> Result<Vec<(String, PathBuf)>, String> {
 
 fn extract_plugin_name(path: &Path) -> Option<String> {
     let filename = path.file_name()?.to_str()?;
-    let prefix = if cfg!(target_os = "windows") {
-        "xfetch-plugin-"
-    } else {
-        "xfetch-plugin-"
-    };
+    let prefix = PLUGIN_PREFIX;
 
     if let Some(name) = filename.strip_prefix(prefix) {
         if cfg!(target_os = "windows") {
@@ -351,8 +348,55 @@ pub fn default_plugin_dir() -> PathBuf {
 
 fn plugin_binary_name(plugin_name: &str) -> String {
     if cfg!(target_os = "windows") {
-        format!("xfetch-plugin-{}.exe", plugin_name)
+        format!("{}{}.exe", PLUGIN_PREFIX, plugin_name)
     } else {
-        format!("xfetch-plugin-{}", plugin_name)
+        format!("{}{}", PLUGIN_PREFIX, plugin_name)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::Path;
+
+    #[test]
+    fn test_extract_plugin_name_linux() {
+        let path = Path::new("/usr/lib/xfetch/plugins/xfetch-plugin-hello");
+        assert_eq!(extract_plugin_name(path), Some("hello".to_string()));
+    }
+
+    #[test]
+    fn test_extract_plugin_name_with_exe() {
+        let path = Path::new("xfetch-plugin-hello.exe");
+        let result = extract_plugin_name(path);
+        // Just the filename (no directory) works cross-platform
+        if cfg!(target_os = "windows") {
+            assert_eq!(result, Some("hello".to_string()));
+        } else {
+            assert_eq!(result, Some("hello.exe".to_string()));
+        }
+    }
+
+    #[test]
+    fn test_extract_plugin_name_no_match() {
+        let path = Path::new("/usr/bin/something-else");
+        assert_eq!(extract_plugin_name(path), None);
+    }
+
+    #[test]
+    fn test_extract_plugin_name_invalid_utf8() {
+        // Use a path that's valid but doesn't match prefix
+        let path = Path::new("/tmp/random-file");
+        assert_eq!(extract_plugin_name(path), None);
+    }
+
+    #[test]
+    fn test_plugin_binary_name() {
+        let name = plugin_binary_name("test");
+        if cfg!(target_os = "windows") {
+            assert_eq!(name, "xfetch-plugin-test.exe");
+        } else {
+            assert_eq!(name, "xfetch-plugin-test");
+        }
     }
 }

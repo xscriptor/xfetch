@@ -5,6 +5,13 @@ use std::io::stdout;
 use super::x::{expand_path, get_default_ascii};
 
 
+fn is_image_file(path: &str) -> bool {
+    path.ends_with(".png")
+        || path.ends_with(".jpg")
+        || path.ends_with(".jpeg")
+        || path.ends_with(".svg")
+}
+
 pub fn get_logo_data(config: &Config) -> (Vec<String>, bool, usize) {
 // ASCII/Image handling
     let mut ascii_lines: Vec<String> = Vec::new();
@@ -14,7 +21,7 @@ pub fn get_logo_data(config: &Config) -> (Vec<String>, bool, usize) {
 
     if let Some(path_str) = &config.logo_path {
         let path = expand_path(path_str);
-        if path_str.ends_with(".png") || path_str.ends_with(".jpg") || path_str.ends_with(".jpeg") || path_str.ends_with(".svg") {
+        if is_image_file(path_str) {
             let conf = ViuerConfig {
                 absolute_offset: false,
                 transparent: true,
