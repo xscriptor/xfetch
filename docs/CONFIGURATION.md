@@ -141,7 +141,7 @@ xfetch can animate the ASCII logo via an external plugin. The animation runs onl
 }
 ```
 
-For plugin installation and the protocol details, see [docs/PLUGINS.md](docs/PLUGINS.md).
+For plugin installation and the protocol details, see [PLUGINS.md](PLUGINS.md).
 
 ## Layouts
 

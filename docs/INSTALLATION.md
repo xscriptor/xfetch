@@ -1,134 +1,190 @@
 # Installation Guide
 
-This guide covers the installation process for **xfetch** on various operating systems.
-
-## Prerequisites
-
-**xfetch** is built with Rust. You must have the Rust toolchain installed on your system.
-
-To install Rust, run the following command (works on Linux and macOS):
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-For Windows, download the installer from [rust-lang.org](https://www.rust-lang.org/tools/install).
+This guide covers the complete installation process for **xfetch** on Linux, macOS, and Windows.
 
 ---
 
-## Linux
+## Prerequisites
 
-### Debian/Ubuntu based (Debian, Ubuntu, Linux Mint, Pop!_OS)
+- **git** — for cloning the repository (not needed for the remote one-liner install)
+- **Rust/Cargo** — the build toolchain. If not installed, the installer can set it up via [rustup](https://rustup.rs/)
+- **macOS**: Xcode Command Line Tools (`xcode-select --install`)
+- **Linux**: `build-essential`, `pkg-config`, `libssl-dev` (Debian/Ubuntu) or `base-devel` (Arch)
 
-1.  **Install dependencies**:
-    You may need development tools and libraries for image processing.
-    ```bash
-    sudo apt update
-    sudo apt install build-essential pkg-config libssl-dev
-    ```
+---
 
-2.  **Clone and Install**:
-    ```bash
-    git clone https://github.com/xscriptor/xfetch.git
-    cd xfetch
-    cargo install --path .
-    ```
+## Quick Install (Recommended)
 
-3.  **Add to PATH**:
-    Ensure `~/.cargo/bin` is in your PATH.
+The fastest way to install xfetch.
 
-### Arch Linux based (Arch, Manjaro, EndeavourOS)
+### Linux / macOS
 
-1.  **Install dependencies**:
-    ```bash
-    sudo pacman -S base-devel
-    ```
+```bash
+curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | bash
+```
 
-2.  **Clone and Install**:
-    ```bash
-    git clone https://github.com/xscriptor/xfetch.git
-    cd xfetch
-    cargo install --path .
-    ```
+If `cargo` is not installed, the script will offer to install Rust via rustup automatically.
 
-### Using PKGBUILD (Recommended)
+### Windows (PowerShell)
+
+```powershell
+irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex
+```
+
+### What the Script Does
+
+1. Checks for Rust (offers to install it if missing)
+2. Clones the repository
+3. Builds the binary with `cargo build --release`
+4. Installs it to `~/.local/bin/`
+5. Sets up default config files in `~/.config/xfetch/`
+6. Adds `~/.local/bin` to your PATH (via `~/.bashrc`, `~/.zshrc`, etc.)
+
+### Install Script Options
+
+The install script supports several flags for customization:
+
+```bash
+# Install to a custom prefix
+bash <(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --prefix /usr/local
+
+# Skip PATH modification
+bash <(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --no-modify-path
+
+# Install from a local clone of the repository
+git clone https://github.com/xscriptor/xfetch.git
+cd xfetch
+bash install.sh --local
+
+# Non-interactive install (auto-yes to prompts)
+bash install.sh --local --yes
+```
+
+For all available flags:
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --help
+```
+
+---
+
+## Local Install
+
+If you have already cloned the repository, run the installer directly from the project root:
+
+```bash
+cd xfetch
+bash install.sh --local
+```
+
+This skips the git clone step and builds from your local copy.
+
+---
+
+## Build from Source (Manual)
+
+For full control over the build:
+
+```bash
+# Clone
+git clone https://github.com/xscriptor/xfetch.git
+cd xfetch
+
+# Build release binary
+cargo build --release
+
+# The binary is at: target/release/xfetch
+# Install it manually:
+cp target/release/xfetch ~/.local/bin/
+
+# Set up config
+mkdir -p ~/.config/xfetch
+cp configs/config.jsonc ~/.config/xfetch/config.jsonc
+cp -r logos/* ~/.config/xfetch/logos/
+```
+
+---
+
+## Install via Cargo
+
+```bash
+cargo install --path .
+```
+
+This installs to `~/.cargo/bin/` (ensure it is in your PATH).
+
+---
+
+## Arch Linux (PKGBUILD)
 
 This method installs xfetch as a proper Arch package, making it easy to update and remove.
 
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/xscriptor/xfetch.git
-    cd xfetch
-    ```
+```bash
+git clone https://github.com/xscriptor/xfetch.git
+cd xfetch
+makepkg -si
+```
 
-2.  **Build and install the package**:
-    ```bash
-    makepkg -si
-    ```
-    This will:
-    - Download dependencies automatically
-    - Build the package from source
-    - Install it system-wide to `/usr/bin/xfetch`
+Installs system-wide to `/usr/bin/xfetch`.
 
-3.  **Verify installation**:
-    ```bash
-    xfetch
-    ```
-
-> **Note:** Config examples and logos are installed to `/usr/share/xfetch/`.
-
-To uninstall:
+To uninstall the package:
 ```bash
 sudo pacman -R xfetch-git
 ```
 
 ---
 
-## macOS
+## Verifying Installation
 
-1.  **Install dependencies** (optional, usually handled by cargo/homebrew):
-    Ensure you have Xcode Command Line Tools installed:
-    ```bash
-    xcode-select --install
-    ```
+After installing, verify xfetch works:
 
-2.  **Clone and Install**:
-    ```bash
-    git clone https://github.com/xscriptor/xfetch.git
-    cd xfetch
-    cargo install --path .
-    ```
+```bash
+xfetch --version
+```
 
----
-
-## Windows
-
-1.  **Prerequisites**:
-    Ensure you have the Visual Studio C++ Build Tools installed (usually part of the Rust installation setup).
-
-2.  **Clone and Install**:
-    Open PowerShell or Command Prompt:
-    ```powershell
-    git clone https://github.com/xscriptor/xfetch.git
-    cd xfetch
-    cargo install --path .
-    ```
-
-3.  **Running**:
-    You can now run `xfetch` from any terminal window.
-
----
-
-## Verify Installation
-
-After installation, verify it works by running:
+You should see version output. Then run it to test the display:
 
 ```bash
 xfetch
 ```
 
-Or test a specific config:
+### Troubleshooting "command not found"
 
+If you get a "command not found" error:
+
+- **Restart your terminal**, or
+- Run `source ~/.bashrc` (or `source ~/.zshrc`), or
+- Manually add `~/.local/bin` to your PATH:
+  ```bash
+  export PATH="$HOME/.local/bin:$PATH"
+  ```
+
+---
+
+## Uninstallation
+
+See the [Uninstallation Guide](UNINSTALLATION.md) for detailed instructions.
+
+**Quick uninstall:**
 ```bash
-xfetch --config configs/config_11_pacman.jsonc
+curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/uninstall.sh | bash
 ```
+
+**Manual removal:**
+```bash
+rm -f ~/.local/bin/xfetch
+rm -rf ~/.config/xfetch
+```
+
+Also remove the PATH line from `~/.bashrc`, `~/.zshrc`, or `~/.bash_profile`:
+```bash
+# xfetch path
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+---
+
+## Next Steps
+
+- [Configuration Guide](CONFIGURATION.md) — customize modules, logos, colors, and layouts
+- [Layouts Guide](LAYOUTS.md) — explore built-in display layouts
+- [Plugins Guide](PLUGINS.md) — extend xfetch with external plugins

@@ -19,7 +19,7 @@
     <li><a href="#previews">Previews <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/device-camera.svg"/></a></li>
     <li><a href="#quick-install">Quick Install </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/pass-filled.svg"/></li>
     <li><a href="#features">Features </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/grabber.svg" /></li>
-    <li><a href="#installation">Installation </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/github-action.svg" /></li>
+    <li><a href="#quick-install">Installation </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/github-action.svg" /></li>
     <li><a href="#configuration">Configuration </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/gear.svg" /></li>
     <li><a href="#usage">Usage </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/flame.svg"/></li>
     <li><a href="#related-documents">Related Documents </a>
@@ -66,41 +66,23 @@
 
 <h2 id="quick-install" align="center"> Quick Install</h2>
 
-<h3> Linux <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/terminal-linux.svg" /> / <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/terminal.svg" /> macOS </h3>
-
+**Linux / macOS:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | bash
 ```
 
-<h3> Windows (PowerShell) <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/terminal-powershell.svg" /></h3>
-
+**Windows (PowerShell):**
 ```powershell
 irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex
 ```
+
+> For detailed installation steps — prerequisites, manual builds, package managers, and uninstallation — see the [Installation Guide](docs/INSTALLATION.md).
 
 <h2 id="features" align="center"> Features</h2>
 
 - **Cross-platform**: Works on Linux, Windows, and macOS.
 - **Customizable**: Configure modules via `config.jsonc`.
 - **Fast**: Written in Rust for performance.
-
-<h2 id="installation" align="center"> Installation </h2>
-
-<h3> From Source </h3>
-
-1. Ensure you have Rust installed.
-2. Clone the repository.
-3. Build and run:
-
-```bash
-cargo run --release
-```
-
-Or install locally:
-
-```bash
-cargo install --path .
-```
 
 <h2 id="configuration" align="center"> Configuration </h2>
 
