@@ -1,55 +1,62 @@
-# Installation Guide
+<h1>Installation Guide</h1>
 
-This guide covers the complete installation process for **xfetch** on Linux, macOS, and Windows.
+<p>
+  This guide covers the complete installation process for <strong>xfetch</strong> on Linux, macOS, and Windows.
+</p>
 
----
+<hr>
 
-## Prerequisites
+<h2>Prerequisites</h2>
 
-- **git** — for cloning the repository (not needed for the remote one-liner install)
-- **Rust/Cargo** — the build toolchain. If not installed, the installer can set it up via [rustup](https://rustup.rs/)
-- **macOS**: Xcode Command Line Tools (`xcode-select --install`)
-- **Linux**: `build-essential`, `pkg-config`, `libssl-dev` (Debian/Ubuntu) or `base-devel` (Arch)
+<ul>
+  <li><strong>git</strong> — for cloning the repository (not needed for the remote one-liner install)</li>
+  <li><strong>Rust/Cargo</strong> — the build toolchain. If not installed, the installer can set it up via <a href="https://rustup.rs/">rustup</a></li>
+  <li><strong>macOS</strong>: Xcode Command Line Tools (<code>xcode-select --install</code>)</li>
+  <li><strong>Linux</strong>: <code>build-essential</code>, <code>pkg-config</code>, <code>libssl-dev</code> (Debian/Ubuntu) or <code>base-devel</code> (Arch)</li>
+</ul>
 
----
+<hr>
 
-## Quick Install (Recommended)
+<h2>Quick Install (Recommended)</h2>
 
-The fastest way to install xfetch.
+<p>
+  The fastest way to install xfetch.
+</p>
 
-### Linux / macOS
+<h3>Linux / macOS</h3>
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | bash
-```
+<pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh | bash</code></pre>
 
-If `cargo` is not installed, the script will offer to install Rust via rustup automatically.
+<p>
+  If <code>cargo</code> is not installed, the script will offer to install Rust via rustup automatically.
+</p>
 
-### Windows (PowerShell)
+<h3>Windows (PowerShell)</h3>
 
-```powershell
-irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex
-```
+<pre><code class="language-powershell">irm https://raw.githubusercontent.com/xscriptor/xfetch/main/install.ps1 | iex</code></pre>
 
-### What the Script Does
+<h3>What the Script Does</h3>
 
-1. Checks for Rust (offers to install it if missing)
-2. Clones the repository
-3. Builds the binary with `cargo build --release`
-4. Installs it to `~/.local/bin/`
-5. Sets up default config files in `~/.config/xfetch/`
-6. Adds `~/.local/bin` to your PATH (via `~/.bashrc`, `~/.zshrc`, etc.)
+<ol>
+  <li>Checks for Rust (offers to install it if missing)</li>
+  <li>Clones the repository</li>
+  <li>Builds the binary with <code>cargo build --release</code></li>
+  <li>Installs it to <code>~/.local/bin/</code></li>
+  <li>Sets up default config files in <code>~/.config/xfetch/</code></li>
+  <li>Adds <code>~/.local/bin</code> to your PATH (via <code>~/.bashrc</code>, <code>~/.zshrc</code>, etc.)</li>
+</ol>
 
-### Install Script Options
+<h3>Install Script Options</h3>
 
-The install script supports several flags for customization:
+<p>
+  The install script supports several flags for customization:
+</p>
 
-```bash
-# Install to a custom prefix
-bash <(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --prefix /usr/local
+<pre><code class="language-bash"># Install to a custom prefix
+bash &lt;(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --prefix /usr/local
 
 # Skip PATH modification
-bash <(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --no-modify-path
+bash &lt;(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --no-modify-path
 
 # Install from a local clone of the repository
 git clone https://github.com/xscriptor/xfetch.git
@@ -57,35 +64,38 @@ cd xfetch
 bash install.sh --local
 
 # Non-interactive install (auto-yes to prompts)
-bash install.sh --local --yes
-```
+bash install.sh --local --yes</code></pre>
 
-For all available flags:
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --help
-```
+<p>
+  For all available flags:
+</p>
 
----
+<pre><code class="language-bash">bash &lt;(curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/install.sh) --help</code></pre>
 
-## Local Install
+<hr>
 
-If you have already cloned the repository, run the installer directly from the project root:
+<h2>Local Install</h2>
 
-```bash
-cd xfetch
-bash install.sh --local
-```
+<p>
+  If you have already cloned the repository, run the installer directly from the project root:
+</p>
 
-This skips the git clone step and builds from your local copy.
+<pre><code class="language-bash">cd xfetch
+bash install.sh --local</code></pre>
 
----
+<p>
+  This skips the git clone step and builds from your local copy.
+</p>
 
-## Build from Source (Manual)
+<hr>
 
-For full control over the build:
+<h2>Build from Source (Manual)</h2>
 
-```bash
-# Clone
+<p>
+  For full control over the build:
+</p>
+
+<pre><code class="language-bash"># Clone
 git clone https://github.com/xscriptor/xfetch.git
 cd xfetch
 
@@ -99,92 +109,100 @@ cp target/release/xfetch ~/.local/bin/
 # Set up config
 mkdir -p ~/.config/xfetch
 cp configs/config.jsonc ~/.config/xfetch/config.jsonc
-cp -r logos/* ~/.config/xfetch/logos/
-```
+cp -r logos/* ~/.config/xfetch/logos/</code></pre>
 
----
+<hr>
 
-## Install via Cargo
+<h2>Install via Cargo</h2>
 
-```bash
-cargo install --path .
-```
+<pre><code class="language-bash">cargo install --path .</code></pre>
 
-This installs to `~/.cargo/bin/` (ensure it is in your PATH).
+<p>
+  This installs to <code>~/.cargo/bin/</code> (ensure it is in your PATH).
+</p>
 
----
+<hr>
 
-## Arch Linux (PKGBUILD)
+<h2>Arch Linux (PKGBUILD)</h2>
 
-This method installs xfetch as a proper Arch package, making it easy to update and remove.
+<p>
+  This method installs xfetch as a proper Arch package, making it easy to update and remove.
+</p>
 
-```bash
-git clone https://github.com/xscriptor/xfetch.git
+<pre><code class="language-bash">git clone https://github.com/xscriptor/xfetch.git
 cd xfetch
-makepkg -si
-```
+makepkg -si</code></pre>
 
-Installs system-wide to `/usr/bin/xfetch`.
+<p>
+  Installs system-wide to <code>/usr/bin/xfetch</code>.
+</p>
 
-To uninstall the package:
-```bash
-sudo pacman -R xfetch-git
-```
+<p>
+  To uninstall the package:
+</p>
 
----
+<pre><code class="language-bash">sudo pacman -R xfetch-git</code></pre>
 
-## Verifying Installation
+<hr>
 
-After installing, verify xfetch works:
+<h2>Verifying Installation</h2>
 
-```bash
-xfetch --version
-```
+<p>
+  After installing, verify xfetch works:
+</p>
 
-You should see version output. Then run it to test the display:
+<pre><code class="language-bash">xfetch --version</code></pre>
 
-```bash
-xfetch
-```
+<p>
+  You should see version output. Then run it to test the display:
+</p>
 
-### Troubleshooting "command not found"
+<pre><code class="language-bash">xfetch</code></pre>
 
-If you get a "command not found" error:
+<h3>Troubleshooting &quot;command not found&quot;</h3>
 
-- **Restart your terminal**, or
-- Run `source ~/.bashrc` (or `source ~/.zshrc`), or
-- Manually add `~/.local/bin` to your PATH:
-  ```bash
-  export PATH="$HOME/.local/bin:$PATH"
-  ```
+<p>
+  If you get a &quot;command not found&quot; error:
+</p>
 
----
+<ul>
+  <li><strong>Restart your terminal</strong>, or</li>
+  <li>Run <code>source ~/.bashrc</code> (or <code>source ~/.zshrc</code>), or</li>
+  <li>Manually add <code>~/.local/bin</code> to your PATH:</li>
+</ul>
 
-## Uninstallation
+<pre><code class="language-bash">export PATH="$HOME/.local/bin:$PATH"</code></pre>
 
-See the [Uninstallation Guide](UNINSTALLATION.md) for detailed instructions.
+<hr>
 
-**Quick uninstall:**
-```bash
-curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/uninstall.sh | bash
-```
+<h2>Uninstallation</h2>
 
-**Manual removal:**
-```bash
-rm -f ~/.local/bin/xfetch
-rm -rf ~/.config/xfetch
-```
+<p>
+  See the <a href="UNINSTALLATION.md">Uninstallation Guide</a> for detailed instructions.
+</p>
 
-Also remove the PATH line from `~/.bashrc`, `~/.zshrc`, or `~/.bash_profile`:
-```bash
-# xfetch path
-export PATH="$HOME/.local/bin:$PATH"
-```
+<p><strong>Quick uninstall:</strong></p>
 
----
+<pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/xscriptor/xfetch/main/uninstall.sh | bash</code></pre>
 
-## Next Steps
+<p><strong>Manual removal:</strong></p>
 
-- [Configuration Guide](CONFIGURATION.md) — customize modules, logos, colors, and layouts
-- [Layouts Guide](LAYOUTS.md) — explore built-in display layouts
-- [Plugins Guide](PLUGINS.md) — extend xfetch with external plugins
+<pre><code class="language-bash">rm -f ~/.local/bin/xfetch
+rm -rf ~/.config/xfetch</code></pre>
+
+<p>
+  Also remove the PATH line from <code>~/.bashrc</code>, <code>~/.zshrc</code>, or <code>~/.bash_profile</code>:
+</p>
+
+<pre><code class="language-bash"># xfetch path
+export PATH="$HOME/.local/bin:$PATH"</code></pre>
+
+<hr>
+
+<h2>Next Steps</h2>
+
+<ul>
+  <li><a href="CONFIGURATION.md">Configuration Guide</a> — customize modules, logos, colors, and layouts</li>
+  <li><a href="LAYOUTS.md">Layouts Guide</a> — explore built-in display layouts</li>
+  <li><a href="PLUGINS.md">Plugins Guide</a> — extend xfetch with external plugins</li>
+</ul>
