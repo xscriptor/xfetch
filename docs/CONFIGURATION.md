@@ -1,242 +1,275 @@
-# Configuration Guide
+<h1>Configuration Guide</h1>
 
-**xfetch** is highly customizable using JSONC (JSON with Comments) files. This guide explains how to customize every aspect of the tool.
+<p>
+  <strong>xfetch</strong> is highly customizable using JSONC (JSON with Comments) files. This guide explains how to customize every aspect of the tool.
+</p>
 
-## Config File Location
+<h2>Config File Location</h2>
 
-By default, xfetch looks for a configuration file at:
-*   **Linux**: `~/.config/xfetch/config.jsonc`
-*   **Windows**: `%APPDATA%\xfetch\config.jsonc`
-*   **macOS**: `~/Library/Application Support/xfetch/config.jsonc`
+<p>
+  By default, xfetch looks for a configuration file at:
+</p>
 
-You can also pass a custom config file using the `--config` flag:
-```bash
-xfetch --config path/to/my_config.jsonc
-```
+<ul>
+  <li><strong>Linux</strong>: <code>~/.config/xfetch/config.jsonc</code></li>
+  <li><strong>Windows</strong>: <code>%APPDATA%\xfetch\config.jsonc</code></li>
+  <li><strong>macOS</strong>: <code>~/Library/Application Support/xfetch/config.jsonc</code></li>
+</ul>
 
-## Basic Structure
+<p>
+  You can also pass a custom config file using the <code>--config</code> flag:
+</p>
 
-A minimal configuration looks like this:
+<pre><code class="language-bash">xfetch --config path/to/my_config.jsonc</code></pre>
 
-```jsonc
-{
-    "modules": ["os", "kernel", "memory"],
-    "show_colors": true
-}
-```
+<h2>Basic Structure</h2>
 
-## Customizing Modules
+<p>
+  A minimal configuration looks like this:
+</p>
 
-The `modules` array determines which information is displayed and in what order.
+<pre><code class="language-jsonc">{
+    &quot;modules&quot;: [&quot;os&quot;, &quot;kernel&quot;, &quot;memory&quot;],
+    &quot;show_colors&quot;: true
+}</code></pre>
 
-**Available Modules:**
-*   `os`: Operating System name and architecture
-*   `kernel`: Kernel version
-*   `hostname`: Hostname of the machine
-*   `uptime`: System uptime
-*   `packages`: Package count (pacman, dpkg, brew, scoop, etc.)
-*   `shell`: Current shell (bash, zsh, powershell, etc.)
-*   `terminal`: Current terminal emulator
-*   `wm`: Window Manager / Desktop Environment
-*   `cpu`: CPU model and frequency
-*   `gpu`: GPU model
-*   `memory`: RAM usage
-*   `swap`: Swap memory usage
-*   `disk`: Disk usage (first disk)
-*   `battery`: Battery percentage and status
-*   `palette`: Color palette
+<h2>Customizing Modules</h2>
 
-## Logos and ASCII Art
+<p>
+  The <code>modules</code> array determines which information is displayed and in what order.
+</p>
 
-You can display custom logos using text files or images.
+<p><strong>Available Modules:</strong></p>
 
-### Color System for ASCII Logos
+<ul>
+  <li><code>os</code>: Operating System name and architecture</li>
+  <li><code>kernel</code>: Kernel version</li>
+  <li><code>hostname</code>: Hostname of the machine</li>
+  <li><code>uptime</code>: System uptime</li>
+  <li><code>packages</code>: Package count (pacman, dpkg, brew, scoop, etc.)</li>
+  <li><code>shell</code>: Current shell (bash, zsh, powershell, etc.)</li>
+  <li><code>terminal</code>: Current terminal emulator</li>
+  <li><code>wm</code>: Window Manager / Desktop Environment</li>
+  <li><code>cpu</code>: CPU model and frequency</li>
+  <li><code>gpu</code>: GPU model</li>
+  <li><code>memory</code>: RAM usage</li>
+  <li><code>swap</code>: Swap memory usage</li>
+  <li><code>disk</code>: Disk usage (first disk)</li>
+  <li><code>battery</code>: Battery percentage and status</li>
+  <li><code>palette</code>: Color palette</li>
+</ul>
 
-xfetch supports two methods for coloring ASCII logos:
+<h2>Logos and ASCII Art</h2>
 
-#### 1. ANSI Escape Codes in Custom ASCII Files
+<p>
+  You can display custom logos using text files or images.
+</p>
 
-When using a custom ASCII logo file (via `logo_path` or `ascii`), you can embed **ANSI escape codes** directly in the text file to add colors. The escape codes are interpreted by the terminal to render colored text.
+<h3>Color System for ASCII Logos</h3>
 
-**Format:** `\x1b[<code>m` or `\033[<code>m`
+<p>
+  xfetch supports two methods for coloring ASCII logos:
+</p>
 
-**Available Foreground Color Codes:**
+<h4>1. ANSI Escape Codes in Custom ASCII Files</h4>
 
-| Color    | Code | Example                    |
-|----------|------|----------------------------|
-| Black    | 30   | `\x1b[30mText\x1b[0m`       |
-| Red      | 31   | `\x1b[31mText\x1b[0m`       |
-| Green    | 32   | `\x1b[32mText\x1b[0m`       |
-| Yellow   | 33   | `\x1b[33mText\x1b[0m`       |
-| Blue     | 34   | `\x1b[34mText\x1b[0m`       |
-| Magenta  | 35   | `\x1b[35mText\x1b[0m`       |
-| Cyan     | 36   | `\x1b[36mText\x1b[0m`       |
-| White    | 37   | `\x1b[37mText\x1b[0m`       |
-| Gray     | 90   | `\x1b[90mText\x1b[0m`       |
+<p>
+  When using a custom ASCII logo file (via <code>logo_path</code> or <code>ascii</code>), you can embed <strong>ANSI escape codes</strong> directly in the text file to add colors. The escape codes are interpreted by the terminal to render colored text.
+</p>
 
-**256-Color Mode:** `\x1b[38;5;<n>m` where `<n>` is 0-255
+<p><strong>Format:</strong> <code>\x1b[&lt;code&gt;m</code> or <code>\033[&lt;code&gt;m</code></p>
 
-**RGB True Color:** `\x1b[38;2;<r>;<g>;<b>m`
+<p><strong>Available Foreground Color Codes:</strong></p>
 
-**Reset Code:** `\x1b[0m` (resets all formatting)
+<table>
+  <thead>
+    <tr><th>Color</th><th>Code</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Black</td><td>30</td><td><code>\x1b[30mText\x1b[0m</code></td></tr>
+    <tr><td>Red</td><td>31</td><td><code>\x1b[31mText\x1b[0m</code></td></tr>
+    <tr><td>Green</td><td>32</td><td><code>\x1b[32mText\x1b[0m</code></td></tr>
+    <tr><td>Yellow</td><td>33</td><td><code>\x1b[33mText\x1b[0m</code></td></tr>
+    <tr><td>Blue</td><td>34</td><td><code>\x1b[34mText\x1b[0m</code></td></tr>
+    <tr><td>Magenta</td><td>35</td><td><code>\x1b[35mText\x1b[0m</code></td></tr>
+    <tr><td>Cyan</td><td>36</td><td><code>\x1b[36mText\x1b[0m</code></td></tr>
+    <tr><td>White</td><td>37</td><td><code>\x1b[37mText\x1b[0m</code></td></tr>
+    <tr><td>Gray</td><td>90</td><td><code>\x1b[90mText\x1b[0m</code></td></tr>
+  </tbody>
+</table>
 
-**Example ASCII Logo with Colors (`x_logo.txt`):**
-```
-\x1b[36m      \\\\\\      ///
+<p><strong>256-Color Mode:</strong> <code>\x1b[38;5;&lt;n&gt;m</code> where &lt;n&gt; is 0-255</p>
+
+<p><strong>RGB True Color:</strong> <code>\x1b[38;2;&lt;r&gt;;&lt;g&gt;;&lt;b&gt;m</code></p>
+
+<p><strong>Reset Code:</strong> <code>\x1b[0m</code> (resets all formatting)</p>
+
+<p><strong>Example ASCII Logo with Colors (<code>x_logo.txt</code>):</strong></p>
+
+<pre><code class="language-plain">\x1b[36m      \\\\\\      ///
 \x1b[36m       \\\\\\    ///
 \x1b[35m        \\\\\\  ///
 \x1b[35m         \\\\///
 \x1b[33m         ///\\\\
 \x1b[33m        ///  \\\\\\
 \x1b[32m       ///    \\\\\\
-\x1b[32m      ///      \\\\\\
-```
+\x1b[32m      ///      \\\\\</code></pre>
 
-This creates a gradient effect from cyan to green.
+<p>This creates a gradient effect from cyan to green.</p>
 
-#### 2. Default ASCII Logo Color
+<h4>2. Default ASCII Logo Color</h4>
 
-When **no custom logo is specified**, xfetch uses a built-in default ASCII logo. This logo is rendered with an **orange color** (`RGB: 255, 165, 0`) applied programmatically.
+<p>
+  When <strong>no custom logo is specified</strong>, xfetch uses a built-in default ASCII logo. This logo is rendered with an <strong>orange color</strong> (<code>RGB: 255, 165, 0</code>) applied programmatically.
+</p>
 
-The color is set in `src/ui.rs` using CrossTerm:
-```rust
-SetForegroundColor(Color::Rgb { r: 255, g: 165, b: 0 })
-```
+<p>
+  The color is set in <code>src/ui.rs</code> using CrossTerm:
+</p>
 
-> **Note:** Custom ASCII logos bypass this automatic coloring and use their embedded ANSI codes instead.
+<pre><code class="language-rust">SetForegroundColor(Color::Rgb { r: 255, g: 165, b: 0 })</code></pre>
 
-### Text/ASCII Logos
-Create a text file (e.g., `logo.txt`). You can use ANSI escape codes for colors in this file.
+<blockquote><strong>Note:</strong> Custom ASCII logos bypass this automatic coloring and use their embedded ANSI codes instead.</blockquote>
 
-```jsonc
-{
+<h3>Text/ASCII Logos</h3>
+
+<p>
+  Create a text file (e.g., <code>logo.txt</code>). You can use ANSI escape codes for colors in this file.
+</p>
+
+<pre><code class="language-jsonc">{
     // You can use tilde (~) for home directory
-    "logo_path": "~/.config/xfetch/logos/arch.txt",
+    &quot;logo_path&quot;: &quot;~/.config/xfetch/logos/arch.txt&quot;,
     // ...
-}
-```
+}</code></pre>
 
-### Images
-xfetch supports displaying images (png, jpg, svg) if your terminal supports it (using protocols like iTerm2, Kitty, or Sixel, handled by `viuer`).
+<h3>Images</h3>
 
-```jsonc
-{
-    "logo_path": "/path/to/logo.png",
+<p>
+  xfetch supports displaying images (png, jpg, svg) if your terminal supports it (using protocols like iTerm2, Kitty, or Sixel, handled by <code>viuer</code>).
+</p>
+
+<pre><code class="language-jsonc">{
+    &quot;logo_path&quot;: &quot;/path/to/logo.png&quot;,
     // ...
-}
-```
+}</code></pre>
 
-## Logo Animation (Plugin)
+<h2>Logo Animation (Plugin)</h2>
 
-xfetch can animate the ASCII logo via an external plugin. The animation runs only on TTY terminals and only for ASCII logos.
+<p>
+  xfetch can animate the ASCII logo via an external plugin. The animation runs only on TTY terminals and only for ASCII logos.
+</p>
 
-```jsonc
-{
-    "logo_animation": {
-        "plugin": "animate-logo",
-        "fps": 12,
-        "duration_ms": 1200,
-        "loop": false
+<pre><code class="language-jsonc">{
+    &quot;logo_animation&quot;: {
+        &quot;plugin&quot;: &quot;animate-logo&quot;,
+        &quot;fps&quot;: 12,
+        &quot;duration_ms&quot;: 1200,
+        &quot;loop&quot;: false
     }
-}
-```
+}</code></pre>
 
-For plugin installation and the protocol details, see [docs/PLUGINS.md](docs/PLUGINS.md).
+<p>
+  For plugin installation and the protocol details, see <a href="PLUGINS.md">PLUGINS.md</a>.
+</p>
 
-## Layouts
+<h2>Layouts</h2>
 
-### Default Layout
-The standard "side-by-side" fetch layout.
+<h3>Default Layout</h3>
 
-```jsonc
-{
-    "layout": null // or omit this field
-}
-```
+<p>
+  The standard &quot;side-by-side&quot; fetch layout.
+</p>
 
-### Pac-Man Layout
-A boxed layout with a custom header and footer, inspired by Pac-Man.
+<pre><code class="language-jsonc">{
+    &quot;layout&quot;: null // or omit this field
+}</code></pre>
 
-```jsonc
-{
-    "layout": "pacman",
+<h3>Pac-Man Layout</h3>
+
+<p>
+  A boxed layout with a custom header and footer, inspired by Pac-Man.
+</p>
+
+<pre><code class="language-jsonc">{
+    &quot;layout&quot;: &quot;pacman&quot;,
     // Icons displayed in the top border
-    "header_icons": ["ᗧ", "●", "●", "●"], 
+    &quot;header_icons&quot;: [&quot;ᗧ&quot;, &quot;●&quot;, &quot;●&quot;, &quot;●&quot;],
     // Text displayed in the bottom border
-    "footer_text": "GAME OVER"
-}
-```
+    &quot;footer_text&quot;: &quot;GAME OVER&quot;
+}</code></pre>
 
-## Icons and Emojis
+<h2>Icons and Emojis</h2>
 
-You can customize the icon displayed next to each module. You can use standard Emojis or Nerd Fonts.
+<p>
+  You can customize the icon displayed next to each module. You can use standard Emojis or Nerd Fonts.
+</p>
 
-```jsonc
-{
-    "icons": {
-        "os": "",      // Arch Linux icon (Nerd Font)
-        "cpu": "🧠",    // Brain emoji
-        "memory": "RAM:" // Plain text
+<pre><code class="language-jsonc">{
+    &quot;icons&quot;: {
+        &quot;os&quot;: &quot;&quot;,      // Arch Linux icon (Nerd Font)
+        &quot;cpu&quot;: &quot;🧠&quot;,    // Brain emoji
+        &quot;memory&quot;: &quot;RAM:&quot; // Plain text
     }
-}
-```
+}</code></pre>
 
-## Colors
+<h2>Colors</h2>
 
-You can set the color for the icon/label of each module.
+<p>
+  You can set the color for the icon/label of each module.
+</p>
 
-**Available Colors:**
-*   `Black`
-*   `Red`
-*   `Green`
-*   `Yellow`
-*   `Blue`
-*   `Magenta`
-*   `Cyan`
-*   `White`
-*   `Grey` (or `Gray`)
-*   `DarkGrey` (or `DarkGray`)
-*   `DarkRed`
-*   `DarkGreen`
-*   `DarkYellow`
-*   `DarkBlue`
-*   `DarkMagenta`
-*   `DarkCyan`
+<p><strong>Available Colors:</strong></p>
 
-```jsonc
-{
-    "colors": {
-        "os": "Cyan",
-        "cpu": "Red",
-        "memory": "Green"
+<ul>
+  <li><code>Black</code></li>
+  <li><code>Red</code></li>
+  <li><code>Green</code></li>
+  <li><code>Yellow</code></li>
+  <li><code>Blue</code></li>
+  <li><code>Magenta</code></li>
+  <li><code>Cyan</code></li>
+  <li><code>White</code></li>
+  <li><code>Grey</code> (or <code>Gray</code>)</li>
+  <li><code>DarkGrey</code> (or <code>DarkGray</code>)</li>
+  <li><code>DarkRed</code></li>
+  <li><code>DarkGreen</code></li>
+  <li><code>DarkYellow</code></li>
+  <li><code>DarkBlue</code></li>
+  <li><code>DarkMagenta</code></li>
+  <li><code>DarkCyan</code></li>
+</ul>
+
+<pre><code class="language-jsonc">{
+    &quot;colors&quot;: {
+        &quot;os&quot;: &quot;Cyan&quot;,
+        &quot;cpu&quot;: &quot;Red&quot;,
+        &quot;memory&quot;: &quot;Green&quot;
     }
-}
-```
+}</code></pre>
 
-## Full Example
+<h2>Full Example</h2>
 
-```jsonc
-{
-    "logo_path": "~/.config/xfetch/logos/ghost.txt",
-    "layout": "pacman",
-    "header_icons": ["ᗧ", "ᗣ", "ᗣ"],
-    "footer_text": "xfetch",
-    "modules": [
-        "os",
-        "kernel",
-        "cpu",
-        "memory"
+<pre><code class="language-jsonc">{
+    &quot;logo_path&quot;: &quot;~/.config/xfetch/logos/ghost.txt&quot;,
+    &quot;layout&quot;: &quot;pacman&quot;,
+    &quot;header_icons&quot;: [&quot;ᗧ&quot;, &quot;ᗣ&quot;, &quot;ᗣ&quot;],
+    &quot;footer_text&quot;: &quot;xfetch&quot;,
+    &quot;modules&quot;: [
+        &quot;os&quot;,
+        &quot;kernel&quot;,
+        &quot;cpu&quot;,
+        &quot;memory&quot;
     ],
-    "show_colors": true,
-    "icons": {
-        "os": "",
-        "cpu": "",
-        "memory": ""
+    &quot;show_colors&quot;: true,
+    &quot;icons&quot;: {
+        &quot;os&quot;: &quot;&quot;,
+        &quot;cpu&quot;: &quot;&quot;,
+        &quot;memory&quot;: &quot;&quot;
     },
-    "colors": {
-        "os": "Blue",
-        "cpu": "Red",
-        "memory": "Yellow"
+    &quot;colors&quot;: {
+        &quot;os&quot;: &quot;Blue&quot;,
+        &quot;cpu&quot;: &quot;Red&quot;,
+        &quot;memory&quot;: &quot;Yellow&quot;
     }
-}
-```
+}</code></pre>
