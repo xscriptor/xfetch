@@ -3,7 +3,7 @@
 <div align="center">
 <p align="center"><img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/icon.svg" width="80" alt="XFetch logo" /></p>
 
-![xfetch](https://xscriptor.github.io/badges/software/xfetch.svg) ![linux](https://xscriptor.github.io/badges/os/linux.svg) ![macos](https://xscriptor.github.io/badges/os/macos.svg) ![windows](https://xscriptor.github.io/badges/os/windows.svg) ![rust](https://xscriptor.github.io/badges/languages/rust.svg) ![mit](https://xscriptor.github.io/badges/licenses/mit.svg)
+![Crates.io Version](https://img.shields.io/crates/v/xfetch?style=flat-square&logo=rust&color=%23DEA584) ![Crates.io Downloads](https://img.shields.io/crates/d/xfetch?style=flat-square&logo=rust&color=%23DEA584) ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square) ![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows-lightgrey?style=flat-square) ![CI](https://img.shields.io/github/actions/workflow/status/xscriptor/xfetch/rust-tests.yml?style=flat-square&logo=github&label=build) ![Rust](https://img.shields.io/badge/rust-2024%20edition-%23DEA584?style=flat-square&logo=rust)
 
 <p>A cross-platform system information fetching tool inspired by fastfetch and neofetch, written in Rust.</p>
 
@@ -44,7 +44,7 @@
 
 <p align="center">
   <a href="./assets/previews/preview0.jpg">
-    <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview03.png" alt="Main preview" width="850"/>
+    <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview03.jpg" alt="Main preview" width="850"/>
   </a>
 </p>
 
@@ -57,7 +57,7 @@
         <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview02.png" alt="Preview 2" width="490"/>
       </td>
       <td align="center">
-        <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview01.png" alt="Preview 3" width="490"/>
+        <img src="https://raw.githubusercontent.com/xscriptor/xassets/main/xrepos/apps/xfetch/preview01.jpg" alt="Preview 3" width="490"/>
       </td>
     </tr>
   </table>
