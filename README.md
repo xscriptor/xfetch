@@ -32,6 +32,7 @@
     <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/symbol-key.svg" />
     <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/file-submodule.svg" />
     </li>
+    <li><a href="#related-repos">Related Repos </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/symbol-key.svg"/></li>
     <li><a href="#about-the-developer">About X </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/regex.svg"/></li>
   </ul>
 </div>
@@ -142,9 +143,17 @@ xfetch
   </ul>
 </div>
 
-<h3 align="center">Contribute to the project, report issues, or connect with the developer using the links around</h3>
+<p align="center"><em>Contribute to the project, report issues, or connect with the developer using the links around</em></p>
 
-
+<h2 align="center" id="related-repos">Related Repos</h2>
+<ul>
+  <li><a href="https://github.com/xscriptor/terminal">Terminal </a> <img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/terminal-bash.svg" /></li>
+  <li><a href="https://github.com/xscriptor/vscode">VSCode </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/vscode-insiders.svg"/></li>
+  <li><a href="https://github.com/xscriptor/jetbrains">Jetbrains </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/project.svg"/></li>
+  <li><a href="https://github.com/xscriptor/gitnapse">Gitnapse </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/github-alt.svg"/></li>
+  <li><a href="https://github.com/xscriptor/obsidian">Obsidian </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/markdown.svg"/></li>
+  <li><a href="https://github.com/xscriptor/xfetch">XFetch </a><img src="https://xscriptor.github.io/icons/icons/code/product-design/xsvg/git-fetch.svg"/></li>
+</ul>
 
 
 <div id="about-the-developer" align="center">

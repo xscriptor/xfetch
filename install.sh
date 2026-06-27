@@ -90,6 +90,8 @@ detect_shell_rc() {
     # Detect the user's preferred shell config file
     local shell_name
     shell_name="$(basename "${SHELL:-${HOME}}" 2>/dev/null || echo "bash")"
+    # Strip trailing version suffixes like zsh5 -> zsh
+    shell_name="${shell_name%%[0-9]*}"
     case "${shell_name}" in
         zsh)
             if [ -n "${ZDOTDIR:-}" ]; then
@@ -100,14 +102,22 @@ detect_shell_rc() {
             ;;
         bash)
             if [ "$(detect_os)" = "macos" ]; then
-                # On macOS, bash sessions are typically login shells via Terminal
                 echo "${HOME}/.bash_profile"
             else
                 echo "${HOME}/.bashrc"
             fi
             ;;
         fish) echo "${HOME}/.config/fish/config.fish" ;;
-        *)    echo "${HOME}/.profile" ;;
+        *)
+            # Fallback: check common rc files in order of preference
+            for rc in "${HOME}/.zshrc" "${HOME}/.bashrc" "${HOME}/.profile"; do
+                if [ -f "${rc}" ]; then
+                    echo "${rc}"
+                    return 0
+                fi
+            done
+            echo "${HOME}/.profile"
+            ;;
     esac
 }
 
@@ -272,7 +282,7 @@ ensure_path_in_file() {
     fi
 
     # Check if the path line already exists in any form
-    if grep -qs "export PATH.*${BIN_DIR}" "${file}" 2>/dev/null; then
+    if grep -qsF "${BIN_DIR}" "${file}" 2>/dev/null; then
         [ "${FLAG_VERBOSE}" -eq 1 ] && ok "PATH already configured in ${file}"
         return 0
     fi
